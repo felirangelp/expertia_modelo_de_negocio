@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertia DDH | Futuro del Diagnóstico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown parser for AI response -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 
+    Chosen Palette: Modern MedTech (Slate-50 background, Primary Blue-600, Secondary Teal-500, Accents in Indigo).
+    Application Structure Plan: SPA "High-End" interactiva + GEMINI AI INTEGRATION.
+    1) Hero con efecto Parallax JS. 
+    2) Navegación Sticky. 
+    3) Sección de Valor (Pestañas). 
+    4) Operaciones. 
+    5) Finanzas (Calculadora ROI). 
+    6) **NUEVO: Sección 'Demo AI' REEMPLAZADA por Reporte Estático Detallado**. 
+    7) **Widget de Chatbot (Asistente de Negocios)**.
+    
+    Visualization & Content Choices: 
+    - Imágenes: Unsplash via <img> tags.
+    - Gráficos: Chart.js para finanzas.
+    - Interactividad: IntersectionObserver, JS para ROI, Gemini API calls (Chatbot).
+    
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        /* Animaciones de Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Utilitarios de UI */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+
+        /* Estilos de Pestañas */
+        .customer-tab {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .customer-tab.active {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Animación de Contenido */
+        .content-pane {
+            display: none;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .content-pane.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Cards Hover */
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Slider Personalizado */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 2px;
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 60;
+            transition: all 0.3s ease;
+        }
+        .chat-window {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 350px;
+            max-width: 90vw;
+            height: 500px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: none;
+            flex-direction: column;
+            z-index: 60;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            transform-origin: bottom right;
+            animation: scaleIn 0.3s ease;
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Report specific styles */
+        .report-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+
+    <!-- NAV -->
+    <header class="fixed top-0 z-50 w-full glass-panel border-b border-slate-200/50 shadow-sm transition-all duration-300" id="navbar">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <img src="imagenes/logo_expertia.png" alt="Expertia DDH Logo" class="w-10 h-10 rounded-xl shadow-lg group-hover:scale-110 transition-transform object-contain">
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 tracking-tight leading-none">Expertia DDH</h1>
+                    <span class="text-xs text-slate-500 font-medium tracking-wider uppercase">Medical Vision</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="#home" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Inicio</a>
+                <a href="#valor-clientes" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Clientes</a>
+                <a href="#operaciones" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Operaciones</a>
+                <a href="#finanzas" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Finanzas</a>
+                <a href="#demo-report" class="ml-2 px-3 py-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 rounded-full border border-indigo-200 flex items-center gap-1">📄 Ver Reporte</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-slate-700 p-2">
+                <span class="text-2xl">☰</span>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-slate-100 absolute w-full shadow-xl">
+            <div class="px-6 py-4 space-y-3">
+                <a href="#home" class="block text-slate-600 font-medium py-2">Inicio</a>
+                <a href="#valor-clientes" class="block text-slate-600 font-medium py-2">Clientes</a>
+                <a href="#operaciones" class="block text-slate-600 font-medium py-2">Operaciones</a>
+                <a href="#finanzas" class="block text-slate-600 font-medium py-2">Finanzas</a>
+                <a href="#demo-report" class="block text-indigo-600 font-bold py-2">📄 Ver Reporte</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12 overflow-hidden">
+
+        <!-- HERO SECTION (Parallax) -->
+        <section id="home" class="relative min-h-[90vh] flex items-center mb-20">
+            <!-- Background Gradients -->
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50 to-transparent -z-10 opacity-60"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full blur-3xl -z-10 opacity-40 mix-blend-multiply filter"></div>
+
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/50 border border-blue-200 text-blue-700 text-xs font-bold uppercase tracking-wide mb-6">
+                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                        Diagnóstico Asistido con IA
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                        Lo invisible, ahora <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">visible.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-lg">
+                        Expertia DDH elimina la subjetividad en el diagnóstico de cadera pediátrica dibujando la evidencia clínica directamente sobre la imagen.
+                    </p>
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg mb-8 max-w-lg">
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            <strong class="text-blue-900">Objetivo Estratégico:</strong> Desarrollar un sistema de apoyo a la decisión clínica, basado en Inteligencia Artificial Explicable, capaz de identificar y visualizar de forma clara la evidencia diagnóstica de la Displasia del Desarrollo de Cadera (DDH) directamente sobre la imagen radiográfica. Esta solución fortalece la cadena de valor clínica al aportar precisión, transparencia y agilidad al proceso diagnóstico.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                        <a href="#demo-report" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-xl shadow-blue-600/30 hover:bg-blue-700 hover:-translate-y-1 transition-all text-center">
+                            Ver Ejemplo Real 📄
+                        </a>
+                        <button onclick="document.getElementById('chat-toggle').click()" class="px-8 py-4 bg-white text-slate-700 font-bold rounded-xl shadow-md border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2">
+                            <span>💬</span> Preguntar al Bot
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6 border-t border-slate-200 pt-8">
+                        <div>
+                            <p class="text-3xl font-bold text-slate-900">95%</p>
+                            <p class="text-sm text-slate-500 font-medium">Precisión IA</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-slate-900">2x</p>
+                            <p class="text-sm text-slate-500 font-medium">Velocidad Reporte</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-slate-900">24/7</p>
+                            <p class="text-sm text-slate-500 font-medium">Disponibilidad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative reveal delay-200" id="hero-image-container">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl transform rotate-3 scale-95 opacity-20 blur-xl"></div>
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform transition-transform duration-100 ease-out" id="hero-card">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80" alt="Interfaz Médica" class="w-full h-auto object-cover scale-105">
+                        
+                        <!-- Floating UI Elements -->
+                        <div class="absolute top-8 right-8 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50 animate-[float_4s_ease-in-out_infinite]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg">✓</div>
+                                <div>
+                                    <p class="text-xs text-slate-500 uppercase font-bold">Diagnóstico</p>
+                                    <p class="text-sm font-bold text-slate-800">Cadera Normal</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-8 left-8 bg-slate-900/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-slate-700 animate-[float_5s_ease-in-out_infinite_1s]">
+                            <div class="space-y-2 w-48">
+                                <div class="flex justify-between text-xs text-slate-300">
+                                    <span>Ángulo Acetabular</span>
+                                    <span class="text-white font-bold">23°</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-1.5">
+                                    <div class="bg-blue-500 h-1.5 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLIENTS SECTION -->
+        <section id="valor-clientes" class="py-20 bg-white relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ecosistema de Valor</h2>
+                    <p class="text-lg text-slate-600">Nuestra tecnología se adapta a cada actor del sistema de salud para maximizar el impacto.</p>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mb-12 reveal sticky top-24 z-30 py-4 glass-panel rounded-full max-w-4xl mx-auto shadow-sm">
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 active" data-segment="centros">
+                        🏢 Centros Imagen
+                    </button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="ips">
+                        🏥 Hospitales
+                    </button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="eps">
+                        📉 Aseguradoras
+                    </button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="especialistas">
+                        👨‍⚕️ Especialistas
+                    </button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="pacs">
+                        🔌 Fabricantes PACS/RIS
+                    </button>
+                </div>
+
+                <!-- Content Area -->
+                <div class="bg-slate-50 rounded-3xl border border-slate-100 shadow-xl overflow-hidden min-h-[500px] reveal delay-100 relative">
+                    
+                    <!-- CENTROS IMAGEN -->
+                    <div id="content-centros" class="content-pane active">
+                        <div class="grid lg:grid-cols-2 h-full">
+                            <div class="p-10 md:p-14 flex flex-col justify-center">
+                                <div class="mb-2 text-blue-600 font-extrabold tracking-widest text-xs uppercase">Early Adopter</div>
+                                <h3 class="text-3xl font-bold text-slate-900 mb-6">Centros de Imágenes Diagnósticas</h3>
+                                <p class="text-slate-600 mb-6 text-lg">Empresas privadas ágiles enfocadas en volumen. Usuario: El Radiólogo.</p>
+                                <p class="text-slate-600 mb-8 text-lg font-semibold">Propuesta de Valor: "Eficiencia y Blindaje"</p>
+                                
+                                <div class="space-y-4 mb-8">
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">👁️</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Solución al Problema de la "Caja Negra" (Explicabilidad Visual)</h4>
+                                            <p class="text-sm text-slate-500">En salud, un resultado binario ("Tiene/No tiene DDC") no es suficiente. Nuestro sistema grafica la evidencia diagnóstica, trazando automáticamente las líneas de Hilgenreiner, Perkin y Shenton sobre la radiografía. Esto permite al médico validar visualmente el cálculo en lugar de confiar ciegamente en un algoritmo, eliminando la subjetividad.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">⚡</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Velocidad (Throughput)</h4>
+                                            <p class="text-sm text-slate-500">Automatizamos la "carpintería" radiológica, permitiendo aumentar el volumen de lectura de imágenes sin necesidad de contratar personal adicional ni fatigar al equipo actual.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">🛡️</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Defensa Jurídica</h4>
+                                            <p class="text-sm text-slate-500">Proporcionamos un respaldo objetivo y una trazabilidad digital de las mediciones exactas ante posibles demandas por falsos negativos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative min-h-[300px] lg:h-auto">
+                                <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-l from-slate-900/40 to-transparent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HOSPITALES -->
+                    <div id="content-ips" class="content-pane">
+                        <div class="grid lg:grid-cols-2 h-full">
+                            <div class="p-10 md:p-14 flex flex-col justify-center">
+                                <div class="mb-2 text-blue-600 font-extrabold tracking-widest text-xs uppercase">Nivel Enterprise</div>
+                                <h3 class="text-3xl font-bold text-slate-900 mb-6">IPS / Hospitales</h3>
+                                <p class="text-slate-600 mb-4 text-lg">Instituciones grandes que buscan indicadores de calidad y habilitación.</p>
+                                <p class="text-slate-600 mb-8 text-lg font-semibold">Propuesta de Valor: "Eficiencia y Blindaje"</p>
+                                <p class="text-slate-600 mb-8 text-lg">Estandarización clínica a gran escala. Garantice que el diagnóstico en el turno de la noche sea tan preciso como en el día.</p>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-8">
+                                    <div class="bg-white p-4 rounded-xl text-center border border-slate-100">
+                                        <div class="text-3xl mb-2">🏅</div>
+                                        <div class="font-bold text-slate-800 text-sm">Acreditación</div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-xl text-center border border-slate-100">
+                                        <div class="text-3xl mb-2">📊</div>
+                                        <div class="font-bold text-slate-800 text-sm">Indicadores</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative min-h-[300px] lg:h-auto">
+                                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EPS -->
+                    <div id="content-eps" class="content-pane">
+                        <div class="grid lg:grid-cols-2 h-full">
+                            <div class="p-10 md:p-14 flex flex-col justify-center">
+                                <div class="mb-2 text-teal-600 font-extrabold tracking-widest text-xs uppercase">Gestión del Riesgo</div>
+                                <h3 class="text-3xl font-bold text-slate-900 mb-6">Aseguradoras (EPS)</h3>
+                                <p class="text-slate-600 mb-4 text-lg">Entidades pagadoras interesadas en ahorro a largo plazo y salud poblacional.</p>
+                                <p class="text-slate-600 mb-8 text-lg font-semibold">Propuesta de Valor: "Gestión del Riesgo Financiero"</p>
+                                <p class="text-slate-600 mb-4 text-lg">La prevención es la estrategia financiera más inteligente. Evite costos catastróficos futuros.</p>
+                                
+                                <div class="bg-teal-50 border border-teal-100 rounded-xl p-4 mb-6">
+                                    <h4 class="font-bold text-teal-900 mb-2 text-sm">Auditoría Técnica</h4>
+                                    <p class="text-xs text-teal-700">Validación automática de calidad de imagen antes del pago a la IPS.</p>
+                                </div>
+                                
+                                <div class="bg-teal-50 border border-teal-100 rounded-xl p-6 mb-6">
+                                    <div class="flex justify-between items-end mb-2">
+                                        <span class="text-sm font-bold text-teal-800">Costo Tratamiento Temprano</span>
+                                        <span class="text-xl font-bold text-teal-600">$500</span>
+                                    </div>
+                                    <div class="w-full bg-white rounded-full h-3 mb-4">
+                                        <div class="bg-teal-500 h-3 rounded-full" style="width: 5%"></div>
+                                    </div>
+                                    <div class="flex justify-between items-end mb-2">
+                                        <span class="text-sm font-bold text-red-800">Costo Cirugía Tardía</span>
+                                        <span class="text-xl font-bold text-red-600">$10,000+</span>
+                                    </div>
+                                    <div class="w-full bg-white rounded-full h-3">
+                                        <div class="bg-red-500 h-3 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative min-h-[300px] lg:h-auto">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover grayscale opacity-90">
+                                <div class="absolute inset-0 bg-teal-900/30 mix-blend-multiply"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESPECIALISTAS -->
+                    <div id="content-especialistas" class="content-pane">
+                        <div class="grid lg:grid-cols-2 h-full">
+                            <div class="p-10 md:p-14 flex flex-col justify-center">
+                                <div class="mb-2 text-purple-600 font-extrabold tracking-widest text-xs uppercase">B2C / SaaS</div>
+                                <h3 class="text-3xl font-bold text-slate-900 mb-6">Especialistas Independientes</h3>
+                                <p class="text-slate-600 mb-4 text-lg">Pediatras y Ortopedistas con práctica privada.</p>
+                                <p class="text-slate-600 mb-8 text-lg font-semibold">Propuesta de Valor: "Asistente de Consultorio"</p>
+                                <p class="text-slate-600 mb-6 text-lg">Lleve la potencia de la IA en su bolsillo. Su segunda opinión experta, disponible 24/7 en la nube.</p>
+                                
+                                <div class="space-y-3 mb-8">
+                                    <div class="flex items-start gap-3 p-3 bg-white rounded-lg border border-slate-100">
+                                        <span class="text-lg">🌐</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800 text-sm">Autonomía</h4>
+                                            <p class="text-xs text-slate-500">Herramienta de segunda opinión accesible desde cualquier lugar.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3 p-3 bg-white rounded-lg border border-slate-100">
+                                        <span class="text-lg">📱</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800 text-sm">Digitalización</h4>
+                                            <p class="text-xs text-slate-500">Convertir una placa física o CD en un reporte visual digital con un clic.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <ul class="space-y-4 mb-8">
+                                    <li class="flex items-center gap-3">
+                                        <span class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">1</span>
+                                        <span class="font-medium text-slate-700">Suba la foto de la radiografía.</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <span class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">2</span>
+                                        <span class="font-medium text-slate-700">La IA traza ángulos en segundos.</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <span class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">3</span>
+                                        <span class="font-medium text-slate-700">Descargue el reporte PDF.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="relative min-h-[300px] lg:h-auto">
+                                <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FABRICANTES PACS/RIS -->
+                    <div id="content-pacs" class="content-pane">
+                        <div class="grid lg:grid-cols-2 h-full">
+                            <div class="p-10 md:p-14 flex flex-col justify-center">
+                                <div class="mb-2 text-indigo-600 font-extrabold tracking-widest text-xs uppercase">Canal OEM</div>
+                                <h3 class="text-3xl font-bold text-slate-900 mb-6">Fabricantes de PACS/RIS</h3>
+                                <p class="text-slate-600 mb-4 text-lg">Partners tecnológicos para distribución global.</p>
+                                <p class="text-slate-600 mb-8 text-lg font-semibold">Propuesta de Valor: "Middleware Inteligente"</p>
+                                
+                                <div class="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-r-lg mb-8">
+                                    <p class="text-slate-700 leading-relaxed text-lg">
+                                        <strong class="text-indigo-900">Expertia DDH</strong> actúa como un <strong>middleware inteligente</strong> que transforma el PACS de un repositorio pasivo de imágenes en una <strong>herramienta activa de diagnóstico</strong>, y convierte el RIS en un <strong>generador automático de evidencia clínica</strong>.
+                                    </p>
+                                </div>
+
+                                <div class="space-y-4 mb-8">
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">🔌</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Integración OEM (Indirecta)</h4>
+                                            <p class="text-sm text-slate-500">El algoritmo llega pre-instalado en el visor PACS, ofreciendo valor agregado sin fricción para el usuario final.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">🚀</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Diferenciación Competitiva</h4>
+                                            <p class="text-sm text-slate-500">Convierta su sistema PACS/RIS en la única solución del mercado con diagnóstico asistido por IA explicable integrado.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                                        <span class="text-2xl">🌍</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-800">Distribución Global</h4>
+                                            <p class="text-sm text-slate-500">Acceso a mercados internacionales con tecnología de vanguardia validada clínicamente.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative min-h-[300px] lg:h-auto rounded-xl overflow-hidden bg-gradient-to-br from-slate-50 to-indigo-50 p-8">
+                                <div class="h-full flex flex-col justify-center">
+                                    <h4 class="text-sm font-bold text-slate-700 mb-6 text-center uppercase tracking-wider">Partners Tecnológicos</h4>
+                                    <div class="flex flex-col gap-4 items-center justify-center h-full">
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/GE_HealthCare_logo_2023.png" alt="GE HealthCare" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/Siemens_Healthineers_logo.svg.png" alt="Siemens Healthineers" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/logo-Fujifilm.png" alt="Fujifilm" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/Intelerad.webp" alt="Intelerad" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/MXR-Main-Logo_.png" alt="MXR" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                        <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow w-full h-full min-h-[60px]">
+                                            <img src="imagenes/logos fabricantes/pixeon.png" alt="Pixeon" class="max-h-16 w-auto object-contain">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- OPERATIONS SECTION (Cards) -->
+        <section id="operaciones" class="py-20 bg-slate-50 border-t border-slate-200">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 text-center reveal">Motor Operativo</h2>
+                <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto reveal">Los pilares que sustentan nuestra operación y garantizan la excelencia del servicio.</p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card reveal delay-100">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner">💡</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Recursos Clave</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> <strong>Propiedad Intelectual:</strong> Algoritmos de visión (U-Net), pipeline geométrico de trazado automático, procesamiento de imágenes y agentes AI</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> <strong>Plataforma Web:</strong> Interfaz intuitiva para el canal B2C</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> <strong>Talento:</strong> Equipo híbrido (Ingeniería de IA + Asesores Clínicos)</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> <strong>Infraestructura:</strong> Servidores GPU Compliant (Habeas Data / HIPAA), nube y on-premise</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> <strong>Datos:</strong> Dataset Ground Truth validado y diverso</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card reveal delay-200">
+                        <div class="w-14 h-14 bg-gradient-to-br from-teal-100 to-teal-50 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner">⚙️</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Actividades Clave</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-teal-500 rounded-full"></span> <strong>I+D:</strong> Refinamiento continuo de casos "Borderline", precisión de líneas, agentes IA y algoritmos</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-teal-500 rounded-full"></span> <strong>Regulatorio:</strong> Certificación SaMD (INVIMA / FDA)</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-teal-500 rounded-full"></span> <strong>Marketing Digital B2C:</strong> Captación de usuarios médicos individuales</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-teal-500 rounded-full"></span> <strong>Venta Consultiva B2B:</strong> Negociación corporativa</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-teal-500 rounded-full"></span> <strong>Integración PACS:</strong> Conectividad DICOM</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card reveal delay-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-indigo-100 to-indigo-50 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner">🤝</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Socios Estratégicos</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> <strong>Sociedades Científicas:</strong> Aval académico (confianza)</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> <strong>Pasarelas de Pago:</strong> Stripe/PayU para cobros B2C</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> <strong>Proveedores Cloud:</strong> AWS/Azure</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> <strong>Distribuidores:</strong> Equipos Médicos</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> <strong>Firmas Legales:</strong> Propiedad Intelectual</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Canales y Relación con Clientes -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card reveal delay-100">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner">📡</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Canales de Distribución</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Venta Consultiva Directa (B2B):</strong> IPS/Centros (eficiencia clínica) y EPS (ahorro financiero)</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Plataforma Web Autoservicio:</strong> Canal exclusivo para Médico Independiente (registro, pago con tarjeta y uso inmediato)</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Integración OEM (Indirecta):</strong> Algoritmo pre-instalado en visor PACS</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Marketing Científico:</strong> Presencia en congresos (ACR, SERAM, Sociedad de Pediatría)</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card reveal delay-200">
+                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner">💬</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Relación con Clientes</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Soporte Técnico "Enterprise" (B2B):</strong> Garantía 24/7 y SLA estricto</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Automatizada / Self-Service (B2C):</strong> Tutoriales, chat bot y FAQs para usuarios individuales</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Gestión del Cambio:</strong> Capacitación a tecnólogos para mejorar la toma de imágenes</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                <div><strong>Reportes de Impacto (EPS):</strong> Informes periódicos de ahorro generado y patologías detectadas</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINANCE SECTION & SIMULATOR -->
+        <section id="finanzas" class="py-20 bg-white relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute -right-20 top-20 w-96 h-96 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center reveal">Viabilidad Financiera</h2>
+
+                <!-- ROI SIMULATOR -->
+                <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl mb-16 reveal hover:scale-[1.01] transition-transform duration-500">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Simulador de Impacto EPS</h3>
+                            <p class="text-slate-400 mb-8 text-sm">Estime el ahorro anual evitando cirugías tardías.</p>
+                            
+                            <div class="mb-6">
+                                <label class="flex justify-between text-sm font-bold mb-2">
+                                    <span>Población Infantil Tamizada</span>
+                                    <span id="slider-value" class="text-blue-400">5,000</span>
+                                </label>
+                                <input type="range" min="1000" max="50000" step="1000" value="5000" id="population-slider">
+                            </div>
+
+                            <p class="text-xs text-slate-500">*Basado en incidencia del 0.2% y costo de cirugía $10k USD.</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
+                            <p class="text-sm text-slate-300 font-bold uppercase tracking-wider mb-2">Ahorro Potencial Estimado</p>
+                            <div class="text-4xl md:text-5xl font-extrabold text-green-400 mb-2" id="savings-display">$95,000</div>
+                            <p class="text-sm text-green-200/80">USD / Año</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 reveal">
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Mix de Ingresos</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 reveal delay-100">
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Distribución de Costos</h3>
+                        <div class="chart-container">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuentes de Ingresos Detalladas -->
+                <div class="max-w-4xl mx-auto reveal delay-200">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Fuentes de Ingresos</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">💰</div>
+                                <h4 class="font-bold text-slate-900">Paquetes de Créditos Prepago (B2C)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Compra de packs de análisis (ej. 50 radiografías) sin contratos fijos.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-100">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center text-white font-bold">🔧</div>
+                                <h4 class="font-bold text-slate-900">Setup Fee (Implementación B2B)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Cobro único por integración técnica y consultoría.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold">📊</div>
+                                <h4 class="font-bold text-slate-900">Pay-per-Study (Transaccional)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Micro-cobro por radiografía (Ideal para Centros de Imagen).</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold">📈</div>
+                                <h4 class="font-bold text-slate-900">Cápita Tecnológica (EPS)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Cobro fijo mensual por población afiliada.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-xl border border-orange-100 md:col-span-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">🔄</div>
+                                <h4 class="font-bold text-slate-900">Licenciamiento SaaS (Recurrente)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Suscripción anual por mantenimiento y actualizaciones continuas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estructura de Costos Detallada -->
+                <div class="max-w-4xl mx-auto mt-16 reveal delay-300">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Estructura de Costos</h3>
+                    <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center text-red-600 font-bold flex-shrink-0">👥</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">Nómina</h4>
+                                    <p class="text-sm text-slate-600">Ingeniería, Ventas y Soporte</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 font-bold flex-shrink-0">☁️</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">Cómputo</h4>
+                                    <p class="text-sm text-slate-600">Procesamiento GPU en la nube</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600 font-bold flex-shrink-0">💳</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">Comisiones Transaccionales</h4>
+                                    <p class="text-sm text-slate-600">Costos de pasarela de pagos</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 font-bold flex-shrink-0">⚖️</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">Legal/Regulatorio</h4>
+                                    <p class="text-sm text-slate-600">Certificaciones y estructura societaria</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 md:col-span-2">
+                                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold flex-shrink-0">📢</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">CAC (Costo de Adquisición de Clientes)</h4>
+                                    <p class="text-sm text-slate-600">Inversión en marketing y ventas para captar nuevos clientes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ELEVATOR PITCH SECTION -->
+        <section class="py-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+            </div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto text-center reveal">
+                    <div class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+                        Elevator Pitch
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">
+                        Expertia DDH es un sistema de Inteligencia Artificial Explicable que transforma el diagnóstico de cadera pediátrica.
+                    </h2>
+                    <p class="text-xl md:text-2xl leading-relaxed mb-8 opacity-95">
+                        Al visualizar la evidencia diagnóstica directamente sobre la imagen, eliminamos la subjetividad y aumentamos la confianza del especialista. Permitimos a los <strong>Centros de Imagen duplicar su eficiencia</strong>, a las <strong>Aseguradoras prevenir costos millonarios</strong> por cirugías tardías, y a los <strong>Especialistas acceder a una herramienta de precisión</strong> desde cualquier lugar.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#demo-report" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-xl hover:bg-blue-50 hover:-translate-y-1 transition-all">
+                            Ver Reporte de Ejemplo
+                        </a>
+                        <button onclick="document.getElementById('chat-toggle').click()" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all">
+                            Hablar con el Asistente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPLACED: STATIC REPORT SECTION -->
+        <section id="demo-report" class="py-20 bg-slate-50 report-grid relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Header -->
+                <div class="text-center mb-12 reveal">
+                    <span class="inline-block py-1 px-3 rounded-full bg-indigo-600/10 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wide mb-4">Caso de Éxito Real</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Resultado de Análisis DDH</h2>
+                    <p class="text-slate-500 mt-2">Ejemplo de reporte generado automáticamente por Expertia DDH</p>
+                </div>
+
+                <!-- Report Container -->
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden max-w-5xl mx-auto reveal delay-100">
+                    <!-- Top Bar -->
+                    <div class="bg-slate-900 text-white p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="flex items-center gap-4">
+                            <img src="imagenes/logo_expertia.png" alt="Expertia DDH Logo" class="w-10 h-10 rounded-lg object-contain">
+                            <div>
+                                <h3 class="text-xl font-bold">Reporte de Diagnóstico DDH</h3>
+                                <p class="text-sm text-slate-400">Generado el 23 de November de 2025, 21:52</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="bg-green-500/20 text-green-400 border border-green-500/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Análisis Completado</span>
+                        </div>
+                    </div>
+
+                    <div class="p-8 grid lg:grid-cols-3 gap-8">
+                        <!-- Sidebar: Patient & Summary -->
+                        <div class="lg:col-span-1 space-y-8">
+                            <!-- Patient Info -->
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                                <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">👤 Información del Paciente</h4>
+                                <ul class="space-y-3 text-sm text-slate-600">
+                                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>ID:</span> <span class="font-mono font-bold text-slate-800 text-xs truncate max-w-[100px]" title="fede780d-6e2a-45a1-a55e-5c58be317c1f">fede780d...</span></li>
+                                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>Edad:</span> <span class="font-bold text-slate-800">5 meses</span></li>
+                                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>Sexo:</span> <span class="font-bold text-slate-800">Femenino</span></li>
+                                    <li class="flex justify-between"><span>Versión:</span> <span class="font-mono text-xs">1.0.0</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Diagnosis Summary -->
+                            <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-blue-900 mb-4 flex items-center gap-2">🔍 Diagnóstico Integrado</h4>
+                                <div class="text-center mb-6">
+                                    <div class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-lg font-bold border border-green-200">Estado: NORMAL</div>
+                                    <p class="text-xs text-slate-400 mt-2 italic">(Basado en promedios estrictos)</p>
+                                </div>
+                                
+                                <h5 class="font-bold text-xs uppercase text-slate-500 mb-3">Estadísticas</h5>
+                                <div class="grid grid-cols-2 gap-2 text-center">
+                                    <div class="bg-white p-2 rounded border border-slate-100">
+                                        <div class="text-xl font-bold text-slate-700">6</div>
+                                        <div class="text-[10px] text-slate-400 uppercase">Evaluados</div>
+                                    </div>
+                                    <div class="bg-white p-2 rounded border border-slate-100">
+                                        <div class="text-xl font-bold text-green-600">4</div>
+                                        <div class="text-[10px] text-slate-400 uppercase">Normales</div>
+                                    </div>
+                                    <div class="bg-white p-2 rounded border border-slate-100">
+                                        <div class="text-xl font-bold text-orange-500">1</div>
+                                        <div class="text-[10px] text-slate-400 uppercase">Anormal</div>
+                                    </div>
+                                    <div class="bg-white p-2 rounded border border-slate-100">
+                                        <div class="text-xl font-bold text-red-600">0</div>
+                                        <div class="text-[10px] text-slate-400 uppercase">Patológico</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content: Image & Parameters -->
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Image Placeholder -->
+                            <div class="rounded-xl overflow-hidden border border-slate-200 shadow-sm relative group bg-slate-900">
+                                <img src="imagenes/Medidas.png" alt="Radiografía con anotaciones AI - Líneas de Hilgenreiner, Perkin y Shenton" class="w-full h-auto object-contain object-center">
+                                <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20">
+                                    <span class="text-white font-bold text-xs">🖼️ Análisis AI con Anotaciones</span>
+                                </div>
+                            </div>
+
+                            <!-- Parameters Grid -->
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">📊 Evaluación por Parámetro</h4>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <!-- Param Card: H-Distance -->
+                                    <div class="p-4 rounded-lg border border-green-200 bg-green-50/30">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <span class="font-bold text-slate-700 text-sm">H-Distance</span>
+                                            <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅ NORMAL</span>
+                                        </div>
+                                        <div class="text-xs font-mono text-slate-500">Rango: 8.0 - 10.0 mm</div>
+                                    </div>
+                                    
+                                     <!-- Param Card: D-Distance -->
+                                    <div class="p-4 rounded-lg border border-green-200 bg-green-50/30">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <span class="font-bold text-slate-700 text-sm">D-Distance</span>
+                                            <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅ NORMAL</span>
+                                        </div>
+                                        <div class="text-xs font-mono text-slate-500">Rango: 14.0 - 16.0 mm</div>
+                                    </div>
+
+                                     <!-- Param Card: IA -->
+                                    <div class="p-4 rounded-lg border border-green-200 bg-green-50/30 md:col-span-2">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <span class="font-bold text-slate-700 text-sm">Índice Acetabular (IA)</span>
+                                            <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅ NORMAL</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-1">Izq: 23.4°, Der: 23.6°.</p>
+                                        <div class="flex justify-between text-xs font-mono text-slate-500">
+                                            <span>Valor: 23.50°</span>
+                                            <span>Ref: 18.0° - 32.0°</span>
+                                        </div>
+                                    </div>
+
+                                     <!-- Param Card: Shenton -->
+                                    <div class="p-4 rounded-lg border border-orange-200 bg-orange-50/30 md:col-span-2">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <span class="font-bold text-slate-700 text-sm">Línea de Shenton</span>
+                                            <span class="bg-orange-100 text-orange-700 text-[10px] px-2 py-0.5 rounded font-bold">⚠️ ABNORMAL</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 mb-1">Izquierda: <strong>Curvatura excesiva (5.71 > 3.61)</strong>. Derecha: Continua.</p>
+                                         <div class="text-xs font-mono text-slate-500">Requiere evaluación adicional.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Interpretation & Recs -->
+                    <div class="bg-slate-50 p-8 border-t border-slate-200">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">📝 Interpretación Clínica</h4>
+                                <div class="prose prose-sm text-slate-600 max-w-none text-justify text-xs leading-relaxed">
+                                    <p class="mb-2">La evaluación radiográfica de esta paciente de 5.0 meses revela hallazgos <strong>altamente sugestivos de Displasia del Desarrollo de Cadera (DDH)</strong>, específicamente en la cadera derecha.</p>
+                                    <p class="mb-2">El indicador más preocupante es la marcada asimetría en la distancia D. La cadera derecha presenta una distancia D de 31.0 mm, contrastando con los 12.0 mm de la izquierda. Este hallazgo sugiere lateralización o subluxación.</p>
+                                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-2 mt-2">
+                                        <p class="text-xs text-yellow-700 italic">Nota: Aunque el diagnóstico automático inicial fue "NORMAL", la interpretación profunda de la IA detectó la asimetría crítica en la distancia D y Shenton, elevando una alerta clínica.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">💡 Recomendaciones</h4>
+                                <ul class="space-y-3">
+                                     <li class="flex gap-3 bg-white p-3 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                        <span class="text-xl">⚠️</span>
+                                        <span class="text-xs text-slate-700"><strong>Acción Inmediata:</strong> Realizar ecografía de cadera (clasificación de Graf) para confirmar inestabilidad.</span>
+                                    </li>
+                                    <li class="flex gap-3 bg-white p-3 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                        <span class="text-xl">👨‍⚕️</span>
+                                        <span class="text-xs text-slate-700">Derivación urgente a ortopedista pediátrico si se confirma displasia.</span>
+                                    </li>
+                                    <li class="flex gap-3 bg-white p-3 rounded-lg border border-slate-200 shadow-sm opacity-60">
+                                        <span class="text-xl">📅</span>
+                                        <span class="text-xs text-slate-500">Seguimiento estándar (solo si se descarta patología).</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-center border-t border-slate-200 pt-4">
+                             <p class="text-[10px] text-slate-400 uppercase tracking-widest">Este reporte es generado automáticamente y debe ser revisado por un especialista.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8 mb-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-4">
+                    <img src="imagenes/logo_expertia.png" alt="Expertia DDH Logo" class="w-8 h-8 rounded-lg object-contain">
+                    <h2 class="text-xl font-bold text-white">Expertia DDH</h2>
+                </div>
+                <p class="text-sm max-w-sm">Tecnología de visión artificial que democratiza el diagnóstico experto en pediatría. Precisión, rapidez y confianza.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Producto</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-white transition">Características</a></li>
+                    <li><a href="#" class="hover:text-white transition">Para Radiólogos</a></li>
+                    <li><a href="#" class="hover:text-white transition">Integraciones PACS</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-white transition">Privacidad (HIPAA)</a></li>
+                    <li><a href="#" class="hover:text-white transition">Términos de Uso</a></li>
+                    <li><a href="#" class="hover:text-white transition">Certificaciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-8 border-t border-slate-800 text-center text-xs">
+            &copy; 2025 Expertia DDH (Medical Vision). Hecho con ❤️ para la salud infantil.
+        </div>
+    </footer>
+
+    <!-- CHAT WIDGET -->
+    <div class="chat-widget">
+        <button id="chat-toggle" class="w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 focus:outline-none">
+            <span class="text-2xl">💬</span>
+        </button>
+        
+        <div id="chat-window" class="chat-window">
+            <div class="bg-indigo-600 p-4 text-white flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="font-bold">Asistente Estratégico</span>
+                </div>
+                <button id="chat-close" class="text-white/80 hover:text-white">✕</button>
+            </div>
+            
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-slate-50 space-y-3">
+                <div class="flex gap-2 items-start">
+                    <div class="w-8 h-8 bg-indigo-100 rounded-full flex-shrink-0 flex items-center justify-center text-indigo-600 text-xs font-bold">AI</div>
+                    <div class="bg-white p-3 rounded-r-xl rounded-bl-xl shadow-sm border border-slate-100 text-sm text-slate-600">
+                        Hola, soy el asistente virtual de Expertia. ¿Tienes dudas sobre el modelo de negocio, costos o nuestra propuesta de valor?
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-white border-t border-slate-100">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Pregunta sobre ingresos..." class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    <button id="chat-send" class="bg-indigo-600 text-white p-2 rounded-lg hover:bg-indigo-700">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GEMINI API CONFIGURATION ---
+        const apiKey = ""; // API Key injected by environment
+
+        class GeminiService {
+            constructor() {
+                this.baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            }
+
+            async generateContent(prompt) {
+                try {
+                    const response = await fetch(this.baseUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+                    const data = await response.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    return "Lo siento, hubo un error al conectar con la IA. Por favor intenta de nuevo.";
+                }
+            }
+        }
+
+        const gemini = new GeminiService();
+
+        // --- 1. CHATBOT LOGIC ---
+        const chatContext = `
+            Eres el Asistente Estratégico de 'Expertia DDH', una startup de IA médica.
+            
+            DATOS CLAVE DEL NEGOCIO:
+            - Objetivo: Diagnóstico automatizado de Displasia de Cadera (DDH) con IA Explicable.
+            - Propuesta Valor: Para Radiólogos (Eficiencia, Velocidad 2x), EPS (Ahorro financiero masivo), Hospitales (Acreditación).
+            - Clientes: Centros de Imagen (Early Adopters), Hospitales, EPS, Médicos Independientes (B2C).
+            - Ingresos: SaaS Recurrente, Setup Fee, Pay-per-Study, Cápita EPS.
+            - Costos: Nómina Talento (60%), Cómputo GPU (15%).
+            
+            INSTRUCCIONES:
+            - Responde preguntas de inversores o clientes potenciales.
+            - Sé breve, profesional y persuasivo.
+            - Si preguntan algo técnico, resalta la "Explicabilidad Visual" y el trazado de líneas.
+        `;
+
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const chatClose = document.getElementById('chat-close');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+
+        // Toggle Chat
+        if(chatToggle) {
+            chatToggle.addEventListener('click', () => {
+                chatWindow.style.display = 'flex';
+                chatToggle.style.display = 'none';
+            });
+        }
+        
+        if(chatClose) {
+            chatClose.addEventListener('click', () => {
+                chatWindow.style.display = 'none';
+                chatToggle.style.display = 'flex';
+            });
+        }
+
+        // Send Message
+        async function handleChat() {
+            const userMsg = chatInput.value.trim();
+            if (!userMsg) return;
+
+            // User UI
+            appendMessage(userMsg, 'user');
+            chatInput.value = '';
+            
+            // Loading UI
+            const loadingId = appendLoading();
+            
+            // API Call
+            const prompt = `${chatContext}\n\nPregunta del usuario: ${userMsg}\nRespuesta:`;
+            const response = await gemini.generateContent(prompt);
+            
+            // Remove Loading & Show Response
+            document.getElementById(loadingId).remove();
+            appendMessage(response, 'bot');
+        }
+
+        if(chatSend) {
+            chatSend.addEventListener('click', handleChat);
+            chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
+        }
+
+        function appendMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = sender === 'user' ? 'flex gap-2 items-start flex-row-reverse' : 'flex gap-2 items-start';
+            
+            const avatar = document.createElement('div');
+            avatar.className = `w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${sender === 'user' ? 'bg-slate-200 text-slate-600' : 'bg-indigo-100 text-indigo-600'}`;
+            avatar.textContent = sender === 'user' ? 'Tú' : 'AI';
+            
+            const bubble = document.createElement('div');
+            bubble.className = `p-3 rounded-xl shadow-sm text-sm max-w-[80%] ${sender === 'user' ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-white text-slate-600 border border-slate-100 rounded-bl-none'}`;
+            bubble.innerHTML = marked.parse(text); // Render Markdown
+
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function appendLoading() {
+            const id = 'loading-' + Date.now();
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = 'flex gap-2 items-start';
+            div.innerHTML = `
+                <div class="w-8 h-8 bg-indigo-100 rounded-full flex-shrink-0 flex items-center justify-center text-indigo-600 text-xs font-bold">AI</div>
+                <div class="bg-white p-3 rounded-r-xl rounded-bl-xl shadow-sm border border-slate-100 text-sm text-slate-400">
+                    <span class="animate-pulse">Escribiendo...</span>
+                </div>
+            `;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return id;
+        }
+
+
+        // --- EXISTING UI LOGIC (Scroll Reveal, Tabs, Charts, etc.) ---
+        
+        // Scroll Reveal
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Parallax
+        const heroContainer = document.querySelector('#home');
+        const heroCard = document.querySelector('#hero-card');
+        if (heroContainer && heroCard) {
+            heroContainer.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth - e.pageX * 2) / 100;
+                const y = (window.innerHeight - e.pageY * 2) / 100;
+                heroCard.style.transform = `translateX(${x}px) translateY(${y}px) scale(1.05)`;
+            });
+            heroContainer.addEventListener('mouseleave', () => {
+                heroCard.style.transform = `translateX(0) translateY(0) scale(1.05)`;
+            });
+        }
+
+        // Tabs
+        const tabs = document.querySelectorAll('.customer-tab');
+        const panes = document.querySelectorAll('.content-pane');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const segment = tab.getAttribute('data-segment');
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                panes.forEach(pane => {
+                    pane.classList.remove('active');
+                    if (pane.id === `content-${segment}`) setTimeout(() => pane.classList.add('active'), 50);
+                });
+            });
+        });
+
+        // ROI Slider
+        const slider = document.getElementById('population-slider');
+        const displayValue = document.getElementById('slider-value');
+        const displaySavings = document.getElementById('savings-display');
+        function calculateSavings(population) {
+            const incidenceRate = 0.002;
+            const costEarly = 500;
+            const costLate = 10000;
+            const cases = Math.ceil(population * incidenceRate);
+            const savings = cases * (costLate - costEarly);
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(savings);
+        }
+        if(slider) {
+            slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                displayValue.textContent = new Intl.NumberFormat('en-US').format(val);
+                displaySavings.textContent = calculateSavings(val);
+            });
+        }
+
+        // Charts
+        const chartObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) { initCharts(); chartObserver.disconnect(); } });
+        });
+        const chartSection = document.getElementById('finanzas');
+        if(chartSection) chartObserver.observe(chartSection);
+
+        let chartsInitialized = false;
+        function initCharts() {
+            if(chartsInitialized) return;
+            chartsInitialized = true;
+            const ctxRev = document.getElementById('revenueChart');
+            const ctxCost = document.getElementById('costChart');
+            const colorsRevenue = ['#3b82f6', '#6366f1', '#8b5cf6', '#14b8a6', '#06b6d4'];
+            const colorsCost = ['#ef4444', '#f59e0b', '#84cc16', '#64748b', '#cbd5e1'];
+
+            if (ctxRev) new Chart(ctxRev.getContext('2d'), { type: 'doughnut', data: { labels: ['SaaS (40%)', 'Setup Fee (20%)', 'Pay-per-Study (20%)', 'Cápita EPS (10%)', 'B2C (10%)'], datasets: [{ data: [40, 20, 20, 10, 10], backgroundColor: colorsRevenue, borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { animateScale: true, animateRotate: true, duration: 2000 }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: {family: "'Plus Jakarta Sans'", size: 11} } } }, cutout: '70%' } });
+            if (ctxCost) new Chart(ctxCost.getContext('2d'), { type: 'doughnut', data: { labels: ['Talento (60%)', 'Cómputo (15%)', 'CAC (10%)', 'Legal (10%)', 'Comisiones (5%)'], datasets: [{ data: [60, 15, 10, 10, 5], backgroundColor: colorsCost, borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { animateScale: true, animateRotate: true, duration: 2000, delay: 500 }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: {family: "'Plus Jakarta Sans'", size: 11} } } }, cutout: '70%' } });
+        }
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        }
+        document.querySelectorAll('#mobile-menu a').forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')); });
+
+    </script>
+</body>
+</html>

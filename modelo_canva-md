@@ -1,0 +1,154 @@
+Modelo de Negocio Canvas: Expertia DDH (Medical Vision)
+
+Objetivo Estratégico:
+Desarrollar un sistema de apoyo a la decisión clínica, basado en Inteligencia Artificial Explicable, capaz de identificar y visualizar de forma clara la evidencia diagnóstica de la Displasia del Desarrollo de Cadera (DDH) directamente sobre la imagen radiográfica. Esta solución fortalece la cadena de valor clínica al aportar precisión, transparencia y agilidad al proceso diagnóstico, aumentando la confianza del especialista y mejorando la atención al paciente.
+
+1. Propuesta de Valor
+
+¿Qué valor entregamos según quién paga?
+
+A. Para Prestadores (Centros de Radiología e IPS): "Eficiencia y Blindaje"
+
+Explicabilidad Visual (Confianza): El sistema dibuja las líneas de Hilgenreiner, Perkin y Shenton sobre la placa, permitiendo al médico verificar y confiar en el cálculo instantáneamente.
+
+Velocidad (Throughput): Aumentar la capacidad de lectura de imágenes sin contratar más personal.
+
+Defensa Jurídica: Respaldo objetivo y trazabilidad de las mediciones ante posibles demandas.
+
+B. Para Aseguradores (EPS): "Gestión del Riesgo Financiero"
+
+Ahorro Siniestral Masivo: Detección temprana (<$500 USD tratamiento) vs. Cirugía tardía (>$10,000 USD + rehabilitación).
+
+Auditoría Técnica: Validación automática de calidad de imagen antes del pago a la IPS.
+
+C. Para Especialistas (Pediatras/Ortopedistas): "Asistente de Consultorio"
+
+Autonomía: Herramienta de segunda opinión accesible desde cualquier lugar.
+
+Digitalización: Convertir una placa física o CD en un reporte visual digital con un clic.
+
+2. Segmentos de Clientes
+
+¿Quién nos contrata?
+
+1. Centros de Imágenes Diagnósticas (EARLY ADOPTER):
+
+Empresas privadas ágiles enfocadas en volumen. Usuario: El Radiólogo.
+
+2. IPS / Hospitales (Nivel 2-4):
+
+Instituciones grandes que buscan indicadores de calidad y habilitación.
+
+3. EPS / Aseguradoras (Cliente Estratégico):
+
+Entidades pagadoras interesadas en ahorro a largo plazo y salud poblacional.
+
+4. Especialistas Independientes (B2C / B2Pro):
+
+Pediatras y Ortopedistas con práctica privada.
+
+5. Fabricantes de PACS/RIS (Canal OEM):
+
+Partners tecnológicos para distribución global.
+
+3. Canales
+
+¿Cómo llegamos a ellos?
+
+Venta Consultiva Directa (B2B):
+
+IPS/Centros: Enfoque en eficiencia clínica.
+
+EPS: Enfoque en ahorro financiero.
+
+Plataforma Web Autoservicio (Product-Led Growth):
+
+Canal exclusivo para el Médico Independiente (Registro, pago con tarjeta y uso inmediato).
+
+Integración OEM (Indirecta): El algoritmo llega pre-instalado en el visor PACS.
+
+Marketing Científico: Presencia en congresos (ACR, SERAM, Sociedad de Pediatría).
+
+4. Relación con los Clientes
+
+¿Cómo interactuamos?
+
+Soporte Técnico "Enterprise" (B2B): Garantía 24/7 y SLA estricto.
+
+Automatizada / Self-Service (B2C): Tutoriales, chat bot y FAQs para usuarios individuales.
+
+Gestión del Cambio: Capacitación a tecnólogos para mejorar la toma de imágenes.
+
+Reportes de Impacto (EPS): Informes periódicos de ahorro generado y patologías detectadas.
+
+5. Fuentes de Ingresos
+
+¿Cómo monetizamos?
+
+Paquetes de Créditos Prepago (B2C): Compra de packs de análisis (ej. 50 radiografías) sin contratos fijos.
+
+Setup Fee (Implementación B2B): Cobro único por integración técnica y consultoría.
+
+Pay-per-Study (Transaccional): Micro-cobro por radiografía (Ideal para Centros de Imagen).
+
+Cápita Tecnológica (EPS): Cobro fijo mensual por población afiliada.
+
+Licenciamiento SaaS (Recurrente): Suscripción anual por mantenimiento.
+
+6. Recursos Clave
+
+Activos necesarios
+
+Propiedad Intelectual (IP): Algoritmos de visión (U-Net) y pipeline geométrico de trazado automático.
+
+Plataforma Web (Front-end): Interfaz intuitiva para el canal B2C.
+
+Talento: Equipo híbrido (Ingeniería de IA + Asesores Clínicos).
+
+Infraestructura: Servidores GPU Compliant (Habeas Data / HIPAA).
+
+Datos: Dataset Ground Truth validado y diverso.
+
+7. Actividades Clave
+
+Acciones críticas
+
+I+D: Refinamiento continuo de casos "Borderline" y precisión de líneas.
+
+Regulatorio: Certificación SaMD (INVIMA / FDA).
+
+Marketing Digital B2C: Captación de usuarios médicos individuales.
+
+Venta Consultiva B2B: Negociación corporativa.
+
+8. Socios Clave
+
+Red de partners
+
+Sociedades Científicas: Aval académico (confianza).
+
+Pasarelas de Pago: (Stripe/PayU) para cobros B2C.
+
+Proveedores Cloud: AWS/Azure.
+
+Distribuidores de Equipos Médicos.
+
+Firmas Legales: Propiedad Intelectual.
+
+9. Estructura de Costos
+
+Salidas de dinero
+
+Nómina: Ingeniería, Ventas y Soporte.
+
+Cómputo: Procesamiento GPU en la nube.
+
+Comisiones Transaccionales: Costos de pasarela de pagos.
+
+Legal/Regulatorio: Certificaciones y estructura societaria.
+
+CAC: Costo de adquisición de clientes.
+
+Resumen / Elevator Pitch
+
+"Expertia DDH es un sistema de Inteligencia Artificial Explicable que transforma el diagnóstico de cadera pediátrica. Al visualizar la evidencia diagnóstica directamente sobre la imagen, eliminamos la subjetividad y aumentamos la confianza del especialista. Permitimos a los Centros de Imagen duplicar su eficiencia, a las Aseguradoras prevenir costos millonarios por cirugías tardías, y a los Especialistas acceder a una herramienta de precisión desde cualquier lugar."
