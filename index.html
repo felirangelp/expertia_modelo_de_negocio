@@ -1252,19 +1252,12 @@
 
         // Current language (default: Spanish)
         let currentLang = localStorage.getItem('expertia-lang') || 'es';
-        const langOrder = ['es', 'en', 'zh'];
-
-        // Function to cycle language
-        function cycleLanguage() {
-            const currentIndex = langOrder.indexOf(currentLang);
-            const nextIndex = (currentIndex + 1) % langOrder.length;
-            currentLang = langOrder[nextIndex];
-            localStorage.setItem('expertia-lang', currentLang);
-            applyLanguage(currentLang);
-        }
 
         // Function to apply language
         function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('expertia-lang', lang);
+            
             // Update body class for font
             document.body.className = document.body.className.replace(/lang-\w+/g, '');
             if (lang === 'zh') {
@@ -1279,17 +1272,13 @@
                 }
             });
 
-            // Update language toggle buttons
-            const langToggle = document.getElementById('lang-toggle');
-            const langToggleMobile = document.getElementById('lang-toggle-mobile');
-            const langLabels = { es: 'ES', en: 'EN', zh: '中文' };
-            
-            if (langToggle) {
-                langToggle.textContent = langLabels[lang];
-            }
-            if (langToggleMobile) {
-                langToggleMobile.textContent = langLabels[lang];
-            }
+            // Update active state of language buttons
+            document.querySelectorAll('.lang-btn, .lang-btn-mobile').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
 
             // Update charts if they exist
             updateCharts(lang);
@@ -1332,16 +1321,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             applyLanguage(currentLang);
             
-            // Add event listeners to language toggle buttons
-            const langToggle = document.getElementById('lang-toggle');
-            const langToggleMobile = document.getElementById('lang-toggle-mobile');
-            
-            if (langToggle) {
-                langToggle.addEventListener('click', cycleLanguage);
-            }
-            if (langToggleMobile) {
-                langToggleMobile.addEventListener('click', cycleLanguage);
-            }
+            // Add event listeners to language buttons
+            document.querySelectorAll('.lang-btn, .lang-btn-mobile').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const lang = e.target.getAttribute('data-lang');
+                    if (lang) {
+                        applyLanguage(lang);
+                    }
+                });
+            });
         });
 
         // --- GEMINI API CONFIGURATION ---
