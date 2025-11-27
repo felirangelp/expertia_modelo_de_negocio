@@ -1267,6 +1267,7 @@
                 'chat.placeholder': 'Pregunta sobre ingresos...',
                 'chat.writing': 'Escribiendo...',
                 'chat.error': 'Lo siento, hubo un error al conectar con la IA. Por favor intenta de nuevo.',
+                'chat.user': 'Tú',
             },
             en: {
                 // Navigation
@@ -1485,6 +1486,7 @@
                 'chat.placeholder': 'Ask about revenue...',
                 'chat.writing': 'Writing...',
                 'chat.error': 'Sorry, there was an error connecting to the AI. Please try again.',
+                'chat.user': 'You',
             },
             zh: {
                 // Navigation
@@ -1703,6 +1705,7 @@
                 'chat.placeholder': '询问收入...',
                 'chat.writing': '正在输入...',
                 'chat.error': '抱歉，连接AI时出错。请重试。',
+                'chat.user': '你',
             }
         };
 
@@ -1895,7 +1898,7 @@
             
             const avatar = document.createElement('div');
             avatar.className = `w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${sender === 'user' ? 'bg-slate-200 text-slate-600' : 'bg-indigo-100 text-indigo-600'}`;
-            avatar.textContent = sender === 'user' ? 'Tú' : 'AI';
+            avatar.textContent = sender === 'user' ? (translations[currentLang] && translations[currentLang]['chat.user'] ? translations[currentLang]['chat.user'] : 'Tú') : 'AI';
             
             const bubble = document.createElement('div');
             bubble.className = `p-3 rounded-xl shadow-sm text-sm max-w-[80%] ${sender === 'user' ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-white text-slate-600 border border-slate-100 rounded-bl-none'}`;
@@ -1912,10 +1915,11 @@
             const div = document.createElement('div');
             div.id = id;
             div.className = 'flex gap-2 items-start';
+            const writingText = translations[currentLang] && translations[currentLang]['chat.writing'] ? translations[currentLang]['chat.writing'] : 'Escribiendo...';
             div.innerHTML = `
                 <div class="w-8 h-8 bg-indigo-100 rounded-full flex-shrink-0 flex items-center justify-center text-indigo-600 text-xs font-bold">AI</div>
                 <div class="bg-white p-3 rounded-r-xl rounded-bl-xl shadow-sm border border-slate-100 text-sm text-slate-400">
-                    <span class="animate-pulse" data-i18n="chat.writing">Escribiendo...</span>
+                    <span class="animate-pulse">${writingText}</span>
                 </div>
             `;
             chatMessages.appendChild(div);
