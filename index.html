@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown parser for AI response -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- 
     Chosen Palette: Modern MedTech (Slate-50 background, Primary Blue-600, Secondary Teal-500, Accents in Indigo).
     Application Structure Plan: SPA "High-End" interactiva + GEMINI AI INTEGRATION.
@@ -33,6 +33,10 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f8fafc;
             overflow-x: hidden;
+        }
+        
+        body.lang-zh {
+            font-family: 'Noto Sans SC', 'Plus Jakarta Sans', sans-serif;
         }
         
         /* Animaciones de Scroll */
@@ -176,11 +180,12 @@
             </div>
             
             <div class="hidden md:flex items-center space-x-1">
-                <a href="#home" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Inicio</a>
-                <a href="#valor-clientes" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Clientes</a>
-                <a href="#operaciones" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Operaciones</a>
-                <a href="#finanzas" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Finanzas</a>
-                <a href="#demo-report" class="ml-2 px-3 py-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 rounded-full border border-indigo-200 flex items-center gap-1">📄 Ver Reporte</a>
+                <a href="#home" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.home">Inicio</a>
+                <a href="#valor-clientes" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.clients">Clientes</a>
+                <a href="#operaciones" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.operations">Operaciones</a>
+                <a href="#finanzas" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.finance">Finanzas</a>
+                <a href="#demo-report" class="ml-2 px-3 py-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 rounded-full border border-indigo-200 flex items-center gap-1" data-i18n="nav.report">📄 Ver Reporte</a>
+                <button id="lang-toggle" class="ml-2 px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors" title="Cambiar idioma">ES</button>
             </div>
 
             <button id="menu-btn" class="md:hidden text-slate-700 p-2">
@@ -190,11 +195,12 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-slate-100 absolute w-full shadow-xl">
             <div class="px-6 py-4 space-y-3">
-                <a href="#home" class="block text-slate-600 font-medium py-2">Inicio</a>
-                <a href="#valor-clientes" class="block text-slate-600 font-medium py-2">Clientes</a>
-                <a href="#operaciones" class="block text-slate-600 font-medium py-2">Operaciones</a>
-                <a href="#finanzas" class="block text-slate-600 font-medium py-2">Finanzas</a>
-                <a href="#demo-report" class="block text-indigo-600 font-bold py-2">📄 Ver Reporte</a>
+                <a href="#home" class="block text-slate-600 font-medium py-2" data-i18n="nav.home">Inicio</a>
+                <a href="#valor-clientes" class="block text-slate-600 font-medium py-2" data-i18n="nav.clients">Clientes</a>
+                <a href="#operaciones" class="block text-slate-600 font-medium py-2" data-i18n="nav.operations">Operaciones</a>
+                <a href="#finanzas" class="block text-slate-600 font-medium py-2" data-i18n="nav.finance">Finanzas</a>
+                <a href="#demo-report" class="block text-indigo-600 font-bold py-2" data-i18n="nav.report">📄 Ver Reporte</a>
+                <button id="lang-toggle-mobile" class="block w-full text-left text-blue-600 font-bold py-2" data-i18n="nav.lang">ES</button>
             </div>
         </div>
     </header>
@@ -211,41 +217,39 @@
                 <div class="reveal">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/50 border border-blue-200 text-blue-700 text-xs font-bold uppercase tracking-wide mb-6">
                         <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        Diagnóstico Asistido con IA
+                        <span data-i18n="hero.badge">Diagnóstico Asistido con IA</span>
                     </div>
                     <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
-                        Lo invisible, ahora <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">visible.</span>
+                        <span data-i18n="hero.title">Lo invisible, ahora</span> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500" data-i18n="hero.titleHighlight">visible.</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-lg">
+                    <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-lg" data-i18n="hero.subtitle">
                         Expertia elimina la subjetividad en el diagnóstico de cadera pediátrica dibujando la evidencia clínica directamente sobre la imagen.
                     </p>
                     <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg mb-8 max-w-lg">
                         <p class="text-sm text-slate-700 leading-relaxed">
-                            <strong class="text-blue-900">Objetivo Estratégico:</strong> Desarrollar un sistema de apoyo a la decisión clínica, basado en Inteligencia Artificial Explicable, capaz de identificar y visualizar de forma clara la evidencia diagnóstica de la Displasia del Desarrollo de Cadera (DDH) directamente sobre la imagen radiográfica. Esta solución fortalece la cadena de valor clínica al aportar precisión, transparencia y agilidad al proceso diagnóstico.
+                            <strong class="text-blue-900" data-i18n="hero.objective">Objetivo Estratégico:</strong> <span data-i18n="hero.objectiveText">Desarrollar un sistema de apoyo a la decisión clínica, basado en Inteligencia Artificial Explicable, capaz de identificar y visualizar de forma clara la evidencia diagnóstica de la Displasia del Desarrollo de Cadera (DDH) directamente sobre la imagen radiográfica. Esta solución fortalece la cadena de valor clínica al aportar precisión, transparencia y agilidad al proceso diagnóstico.</span>
                         </p>
                     </div>
                     
                     <div class="flex flex-col sm:flex-row gap-4 mb-12">
-                        <a href="#demo-report" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-xl shadow-blue-600/30 hover:bg-blue-700 hover:-translate-y-1 transition-all text-center">
-                            Ver Ejemplo Real 📄
-                        </a>
+                        <a href="#demo-report" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-xl shadow-blue-600/30 hover:bg-blue-700 hover:-translate-y-1 transition-all text-center" data-i18n="hero.cta1">Ver Ejemplo Real 📄</a>
                         <button onclick="document.getElementById('chat-toggle').click()" class="px-8 py-4 bg-white text-slate-700 font-bold rounded-xl shadow-md border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2">
-                            <span>💬</span> Preguntar al Bot
+                            <span data-i18n="hero.cta2">💬 Preguntar al Bot</span>
                         </button>
                     </div>
 
                     <div class="grid grid-cols-3 gap-6 border-t border-slate-200 pt-8">
                         <div>
-                            <p class="text-3xl font-bold text-slate-900">95%</p>
-                            <p class="text-sm text-slate-500 font-medium">Precisión IA</p>
+                            <p class="text-3xl font-bold text-slate-900" data-i18n="hero.stats1">95%</p>
+                            <p class="text-sm text-slate-500 font-medium" data-i18n="hero.stats1Label">Precisión IA</p>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-slate-900">2x</p>
-                            <p class="text-sm text-slate-500 font-medium">Velocidad Reporte</p>
+                            <p class="text-3xl font-bold text-slate-900" data-i18n="hero.stats2">2x</p>
+                            <p class="text-sm text-slate-500 font-medium" data-i18n="hero.stats2Label">Velocidad Reporte</p>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-slate-900">24/7</p>
-                            <p class="text-sm text-slate-500 font-medium">Disponibilidad</p>
+                            <p class="text-3xl font-bold text-slate-900" data-i18n="hero.stats3">24/7</p>
+                            <p class="text-sm text-slate-500 font-medium" data-i18n="hero.stats3Label">Disponibilidad</p>
                         </div>
                     </div>
                 </div>
@@ -260,8 +264,8 @@
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg">✓</div>
                                 <div>
-                                    <p class="text-xs text-slate-500 uppercase font-bold">Diagnóstico</p>
-                                    <p class="text-sm font-bold text-slate-800">Cadera Normal</p>
+                                    <p class="text-xs text-slate-500 uppercase font-bold" data-i18n="hero.diagnosis">Diagnóstico</p>
+                                    <p class="text-sm font-bold text-slate-800" data-i18n="hero.normal">Cadera Normal</p>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +273,7 @@
                         <div class="absolute bottom-8 left-8 bg-slate-900/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-slate-700 animate-[float_5s_ease-in-out_infinite_1s]">
                             <div class="space-y-2 w-48">
                                 <div class="flex justify-between text-xs text-slate-300">
-                                    <span>Ángulo Acetabular</span>
+                                    <span data-i18n="hero.angle">Ángulo Acetabular</span>
                                     <span class="text-white font-bold">23°</span>
                                 </div>
                                 <div class="w-full bg-slate-700 rounded-full h-1.5">
@@ -286,27 +290,17 @@
         <section id="valor-clientes" class="py-20 bg-white relative">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-2xl mx-auto mb-16 reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ecosistema de Valor</h2>
-                    <p class="text-lg text-slate-600">Nuestra tecnología se adapta a cada actor del sistema de salud para maximizar el impacto.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-i18n="clients.title">Ecosistema de Valor</h2>
+                    <p class="text-lg text-slate-600" data-i18n="clients.subtitle">Nuestra tecnología se adapta a cada actor del sistema de salud para maximizar el impacto.</p>
                 </div>
 
                 <!-- Interactive Tabs -->
                 <div class="flex flex-wrap justify-center gap-2 mb-12 reveal sticky top-24 z-30 py-4 glass-panel rounded-full max-w-4xl mx-auto shadow-sm">
-                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 active" data-segment="centros">
-                        🏢 Centros Imagen
-                    </button>
-                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="ips">
-                        🏥 Hospitales
-                    </button>
-                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="eps">
-                        📉 Aseguradoras
-                    </button>
-                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="especialistas">
-                        👨‍⚕️ Especialistas
-                    </button>
-                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="pacs">
-                        🔌 Fabricantes PACS/RIS
-                    </button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 active" data-segment="centros" data-i18n="clients.tab1">🏢 Centros Imagen</button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="ips" data-i18n="clients.tab2">🏥 Hospitales</button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="eps" data-i18n="clients.tab3">📉 Aseguradoras</button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="especialistas" data-i18n="clients.tab4">👨‍⚕️ Especialistas</button>
+                    <button class="customer-tab px-6 py-3 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100" data-segment="pacs" data-i18n="clients.tab5">🔌 Fabricantes PACS/RIS</button>
                 </div>
 
                 <!-- Content Area -->
@@ -540,8 +534,8 @@
         <!-- OPERATIONS SECTION (Cards) -->
         <section id="operaciones" class="py-20 bg-slate-50 border-t border-slate-200">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 text-center reveal">Motor Operativo</h2>
-                <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto reveal">Los pilares que sustentan nuestra operación y garantizan la excelencia del servicio.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 text-center reveal" data-i18n="ops.title">Motor Operativo</h2>
+                <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto reveal" data-i18n="ops.subtitle">Los pilares que sustentan nuestra operación y garantizan la excelencia del servicio.</p>
                 
                 <div class="grid md:grid-cols-3 gap-8 mb-16">
                     
@@ -640,27 +634,27 @@
             <div class="absolute -right-20 top-20 w-96 h-96 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
 
             <div class="container mx-auto px-6 relative z-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center reveal">Viabilidad Financiera</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center reveal" data-i18n="finance.title">Viabilidad Financiera</h2>
 
                 <!-- ROI SIMULATOR -->
                 <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl mb-16 reveal hover:scale-[1.01] transition-transform duration-500">
                     <div class="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h3 class="text-2xl font-bold mb-2">Simulador de Impacto EPS</h3>
-                            <p class="text-slate-400 mb-8 text-sm">Estime el ahorro anual evitando cirugías tardías.</p>
+                            <h3 class="text-2xl font-bold mb-2" data-i18n="finance.simulatorTitle">Simulador de Impacto EPS</h3>
+                            <p class="text-slate-400 mb-8 text-sm" data-i18n="finance.simulatorSubtitle">Estime el ahorro anual evitando cirugías tardías.</p>
                             
                             <div class="mb-6">
                                 <label class="flex justify-between text-sm font-bold mb-2">
-                                    <span>Población Infantil Tamizada</span>
+                                    <span data-i18n="finance.population">Población Infantil Tamizada</span>
                                     <span id="slider-value" class="text-blue-400">5,000</span>
                                 </label>
                                 <input type="range" min="1000" max="50000" step="1000" value="5000" id="population-slider">
                             </div>
 
-                            <p class="text-xs text-slate-500">*Basado en incidencia del 0.2% y costo de cirugía $10k USD.</p>
+                            <p class="text-xs text-slate-500" data-i18n="finance.savingsNote">*Basado en incidencia del 0.2% y costo de cirugía $10k USD.</p>
                         </div>
                         <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
-                            <p class="text-sm text-slate-300 font-bold uppercase tracking-wider mb-2">Ahorro Potencial Estimado</p>
+                            <p class="text-sm text-slate-300 font-bold uppercase tracking-wider mb-2" data-i18n="finance.savings">Ahorro Potencial Estimado</p>
                             <div class="text-4xl md:text-5xl font-extrabold text-green-400 mb-2" id="savings-display">$95,000</div>
                             <p class="text-sm text-green-200/80">USD / Año</p>
                         </div>
@@ -669,13 +663,13 @@
 
                 <div class="grid md:grid-cols-2 gap-12 mb-16">
                     <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 reveal">
-                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Mix de Ingresos</h3>
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center" data-i18n="finance.revenueTitle">Mix de Ingresos</h3>
                         <div class="chart-container">
                             <canvas id="revenueChart"></canvas>
                         </div>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 reveal delay-100">
-                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Distribución de Costos</h3>
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 text-center" data-i18n="finance.costTitle">Distribución de Costos</h3>
                         <div class="chart-container">
                             <canvas id="costChart"></canvas>
                         </div>
@@ -684,7 +678,7 @@
 
                 <!-- Fuentes de Ingresos Detalladas -->
                 <div class="max-w-4xl mx-auto reveal delay-200">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Fuentes de Ingresos</h3>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center" data-i18n="finance.revenueSources">Fuentes de Ingresos</h3>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
                             <div class="flex items-center gap-3 mb-3">
@@ -726,7 +720,7 @@
 
                 <!-- Estructura de Costos Detallada -->
                 <div class="max-w-4xl mx-auto mt-16 reveal delay-300">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Estructura de Costos</h3>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center" data-i18n="finance.costStructure">Estructura de Costos</h3>
                     <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="flex items-start gap-4">
@@ -778,22 +772,16 @@
             </div>
             <div class="container mx-auto px-6 relative z-10">
                 <div class="max-w-4xl mx-auto text-center reveal">
-                    <div class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
-                        Elevator Pitch
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">
+                    <div class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold mb-6 uppercase tracking-wide" data-i18n="pitch.badge">Elevator Pitch</div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight" data-i18n="pitch.title">
                         Expertia es un sistema de Inteligencia Artificial Explicable que transforma el diagnóstico de cadera pediátrica.
                     </h2>
-                    <p class="text-xl md:text-2xl leading-relaxed mb-8 opacity-95">
+                    <p class="text-xl md:text-2xl leading-relaxed mb-8 opacity-95" data-i18n="pitch.text">
                         Al visualizar la evidencia diagnóstica directamente sobre la imagen, eliminamos la subjetividad y aumentamos la confianza del especialista. Permitimos a los <strong>Centros de Imagen duplicar su eficiencia</strong>, a las <strong>Aseguradoras prevenir costos millonarios</strong> por cirugías tardías, y a los <strong>Especialistas acceder a una herramienta de precisión</strong> desde cualquier lugar.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#demo-report" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-xl hover:bg-blue-50 hover:-translate-y-1 transition-all">
-                            Ver Reporte de Ejemplo
-                        </a>
-                        <button onclick="document.getElementById('chat-toggle').click()" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all">
-                            Hablar con el Asistente
-                        </button>
+                        <a href="#demo-report" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-xl hover:bg-blue-50 hover:-translate-y-1 transition-all" data-i18n="pitch.cta1">Ver Reporte de Ejemplo</a>
+                        <button onclick="document.getElementById('chat-toggle').click()" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all" data-i18n="pitch.cta2">Hablar con el Asistente</button>
                     </div>
                 </div>
             </div>
@@ -1035,6 +1023,302 @@
     </div>
 
     <script>
+        // --- I18N CONFIGURATION ---
+        const translations = {
+            es: {
+                // Navigation
+                'nav.home': 'Inicio',
+                'nav.clients': 'Clientes',
+                'nav.operations': 'Operaciones',
+                'nav.finance': 'Finanzas',
+                'nav.report': '📄 Ver Reporte',
+                'nav.lang': 'ES',
+                // Hero Section
+                'hero.badge': 'Diagnóstico Asistido con IA',
+                'hero.title': 'Lo invisible, ahora',
+                'hero.titleHighlight': 'visible.',
+                'hero.subtitle': 'Expertia elimina la subjetividad en el diagnóstico de cadera pediátrica dibujando la evidencia clínica directamente sobre la imagen.',
+                'hero.objective': 'Objetivo Estratégico:',
+                'hero.objectiveText': 'Desarrollar un sistema de apoyo a la decisión clínica, basado en Inteligencia Artificial Explicable, capaz de identificar y visualizar de forma clara la evidencia diagnóstica de la Displasia del Desarrollo de Cadera (DDH) directamente sobre la imagen radiográfica. Esta solución fortalece la cadena de valor clínica al aportar precisión, transparencia y agilidad al proceso diagnóstico.',
+                'hero.cta1': 'Ver Ejemplo Real 📄',
+                'hero.cta2': '💬 Preguntar al Bot',
+                'hero.stats1': '95%',
+                'hero.stats1Label': 'Precisión IA',
+                'hero.stats2': '2x',
+                'hero.stats2Label': 'Velocidad Reporte',
+                'hero.stats3': '24/7',
+                'hero.stats3Label': 'Disponibilidad',
+                'hero.diagnosis': 'Diagnóstico',
+                'hero.normal': 'Cadera Normal',
+                'hero.angle': 'Ángulo Acetabular',
+                // Clients Section
+                'clients.title': 'Ecosistema de Valor',
+                'clients.subtitle': 'Nuestra tecnología se adapta a cada actor del sistema de salud para maximizar el impacto.',
+                'clients.tab1': '🏢 Centros Imagen',
+                'clients.tab2': '🏥 Hospitales',
+                'clients.tab3': '📉 Aseguradoras',
+                'clients.tab4': '👨‍⚕️ Especialistas',
+                'clients.tab5': '🔌 Fabricantes PACS/RIS',
+                // Operations Section
+                'ops.title': 'Motor Operativo',
+                'ops.subtitle': 'Los pilares que sustentan nuestra operación y garantizan la excelencia del servicio.',
+                // Finance Section
+                'finance.title': 'Viabilidad Financiera',
+                'finance.simulatorTitle': 'Simulador de Impacto EPS',
+                'finance.simulatorSubtitle': 'Estime el ahorro anual evitando cirugías tardías.',
+                'finance.population': 'Población Infantil Tamizada',
+                'finance.savings': 'Ahorro Potencial Estimado',
+                'finance.savingsNote': '*Basado en incidencia del 0.2% y costo de cirugía $10k USD.',
+                'finance.revenueTitle': 'Mix de Ingresos',
+                'finance.costTitle': 'Distribución de Costos',
+                'finance.revenueSources': 'Fuentes de Ingresos',
+                'finance.costStructure': 'Estructura de Costos',
+                // Chart Labels
+                'chart.revenue1': 'SaaS (40%)',
+                'chart.revenue2': 'Setup Fee (20%)',
+                'chart.revenue3': 'Pay-per-Study (20%)',
+                'chart.revenue4': 'Cápita EPS (10%)',
+                'chart.revenue5': 'B2C (10%)',
+                'chart.cost1': 'Talento (60%)',
+                'chart.cost2': 'Cómputo (15%)',
+                'chart.cost3': 'CAC (10%)',
+                'chart.cost4': 'Legal (10%)',
+                'chart.cost5': 'Comisiones (5%)',
+                // Elevator Pitch
+                'pitch.badge': 'Elevator Pitch',
+                'pitch.title': 'Expertia es un sistema de Inteligencia Artificial Explicable que transforma el diagnóstico de cadera pediátrica.',
+                'pitch.text': 'Al visualizar la evidencia diagnóstica directamente sobre la imagen, eliminamos la subjetividad y aumentamos la confianza del especialista. Permitimos a los Centros de Imagen duplicar su eficiencia, a las Aseguradoras prevenir costos millonarios por cirugías tardías, y a los Especialistas acceder a una herramienta de precisión desde cualquier lugar.',
+                'pitch.cta1': 'Ver Reporte de Ejemplo',
+                'pitch.cta2': 'Hablar con el Asistente',
+            },
+            en: {
+                // Navigation
+                'nav.home': 'Home',
+                'nav.clients': 'Clients',
+                'nav.operations': 'Operations',
+                'nav.finance': 'Finance',
+                'nav.report': '📄 View Report',
+                'nav.lang': 'EN',
+                // Hero Section
+                'hero.badge': 'AI-Assisted Diagnosis',
+                'hero.title': 'The invisible, now',
+                'hero.titleHighlight': 'visible.',
+                'hero.subtitle': 'Expertia eliminates subjectivity in pediatric hip diagnosis by drawing clinical evidence directly onto the image.',
+                'hero.objective': 'Strategic Objective:',
+                'hero.objectiveText': 'Develop a clinical decision support system, based on Explainable Artificial Intelligence, capable of identifying and clearly visualizing the diagnostic evidence of Developmental Hip Dysplasia (DDH) directly on the radiographic image. This solution strengthens the clinical value chain by providing precision, transparency, and agility to the diagnostic process.',
+                'hero.cta1': 'View Real Example 📄',
+                'hero.cta2': '💬 Ask the Bot',
+                'hero.stats1': '95%',
+                'hero.stats1Label': 'AI Accuracy',
+                'hero.stats2': '2x',
+                'hero.stats2Label': 'Report Speed',
+                'hero.stats3': '24/7',
+                'hero.stats3Label': 'Availability',
+                'hero.diagnosis': 'Diagnosis',
+                'hero.normal': 'Normal Hip',
+                'hero.angle': 'Acetabular Angle',
+                // Clients Section
+                'clients.title': 'Value Ecosystem',
+                'clients.subtitle': 'Our technology adapts to each actor in the health system to maximize impact.',
+                'clients.tab1': '🏢 Imaging Centers',
+                'clients.tab2': '🏥 Hospitals',
+                'clients.tab3': '📉 Insurers',
+                'clients.tab4': '👨‍⚕️ Specialists',
+                'clients.tab5': '🔌 PACS/RIS Manufacturers',
+                // Operations Section
+                'ops.title': 'Operational Engine',
+                'ops.subtitle': 'The pillars that support our operation and guarantee service excellence.',
+                // Finance Section
+                'finance.title': 'Financial Viability',
+                'finance.simulatorTitle': 'EPS Impact Simulator',
+                'finance.simulatorSubtitle': 'Estimate annual savings by avoiding late surgeries.',
+                'finance.population': 'Screened Pediatric Population',
+                'finance.savings': 'Estimated Potential Savings',
+                'finance.savingsNote': '*Based on 0.2% incidence and $10k USD surgery cost.',
+                'finance.revenueTitle': 'Revenue Mix',
+                'finance.costTitle': 'Cost Distribution',
+                'finance.revenueSources': 'Revenue Sources',
+                'finance.costStructure': 'Cost Structure',
+                // Chart Labels
+                'chart.revenue1': 'SaaS (40%)',
+                'chart.revenue2': 'Setup Fee (20%)',
+                'chart.revenue3': 'Pay-per-Study (20%)',
+                'chart.revenue4': 'EPS Capita (10%)',
+                'chart.revenue5': 'B2C (10%)',
+                'chart.cost1': 'Talent (60%)',
+                'chart.cost2': 'Compute (15%)',
+                'chart.cost3': 'CAC (10%)',
+                'chart.cost4': 'Legal (10%)',
+                'chart.cost5': 'Commissions (5%)',
+                // Elevator Pitch
+                'pitch.badge': 'Elevator Pitch',
+                'pitch.title': 'Expertia is an Explainable Artificial Intelligence system that transforms pediatric hip diagnosis.',
+                'pitch.text': 'By visualizing diagnostic evidence directly on the image, we eliminate subjectivity and increase specialist confidence. We enable Imaging Centers to double their efficiency, Insurers to prevent million-dollar costs from late surgeries, and Specialists to access a precision tool from anywhere.',
+                'pitch.cta1': 'View Example Report',
+                'pitch.cta2': 'Talk to the Assistant',
+            },
+            zh: {
+                // Navigation
+                'nav.home': '首页',
+                'nav.clients': '客户',
+                'nav.operations': '运营',
+                'nav.finance': '财务',
+                'nav.report': '📄 查看报告',
+                'nav.lang': '中文',
+                // Hero Section
+                'hero.badge': 'AI辅助诊断',
+                'hero.title': '看不见的，现在',
+                'hero.titleHighlight': '可见。',
+                'hero.subtitle': 'Expertia通过在图像上直接绘制临床证据，消除了儿科髋关节诊断的主观性。',
+                'hero.objective': '战略目标：',
+                'hero.objectiveText': '开发一个基于可解释人工智能的临床决策支持系统，能够在X光图像上直接识别和清晰可视化发育性髋关节发育不良（DDH）的诊断证据。该解决方案通过为诊断过程提供精确性、透明度和敏捷性来加强临床价值链。',
+                'hero.cta1': '查看真实示例 📄',
+                'hero.cta2': '💬 询问机器人',
+                'hero.stats1': '95%',
+                'hero.stats1Label': 'AI准确率',
+                'hero.stats2': '2倍',
+                'hero.stats2Label': '报告速度',
+                'hero.stats3': '24/7',
+                'hero.stats3Label': '可用性',
+                'hero.diagnosis': '诊断',
+                'hero.normal': '正常髋关节',
+                'hero.angle': '髋臼角',
+                // Clients Section
+                'clients.title': '价值生态系统',
+                'clients.subtitle': '我们的技术适应医疗系统中的每个参与者，以最大化影响。',
+                'clients.tab1': '🏢 影像中心',
+                'clients.tab2': '🏥 医院',
+                'clients.tab3': '📉 保险公司',
+                'clients.tab4': '👨‍⚕️ 专科医生',
+                'clients.tab5': '🔌 PACS/RIS制造商',
+                // Operations Section
+                'ops.title': '运营引擎',
+                'ops.subtitle': '支撑我们运营并保证服务卓越的支柱。',
+                // Finance Section
+                'finance.title': '财务可行性',
+                'finance.simulatorTitle': 'EPS影响模拟器',
+                'finance.simulatorSubtitle': '估算通过避免晚期手术节省的年度费用。',
+                'finance.population': '筛查的儿科人群',
+                'finance.savings': '估计潜在节省',
+                'finance.savingsNote': '*基于0.2%的发病率和1万美元的手术费用。',
+                'finance.revenueTitle': '收入组合',
+                'finance.costTitle': '成本分布',
+                'finance.revenueSources': '收入来源',
+                'finance.costStructure': '成本结构',
+                // Chart Labels
+                'chart.revenue1': 'SaaS (40%)',
+                'chart.revenue2': '设置费 (20%)',
+                'chart.revenue3': '按研究付费 (20%)',
+                'chart.revenue4': 'EPS人均 (10%)',
+                'chart.revenue5': 'B2C (10%)',
+                'chart.cost1': '人才 (60%)',
+                'chart.cost2': '计算 (15%)',
+                'chart.cost3': 'CAC (10%)',
+                'chart.cost4': '法律 (10%)',
+                'chart.cost5': '佣金 (5%)',
+                // Elevator Pitch
+                'pitch.badge': '电梯演讲',
+                'pitch.title': 'Expertia是一个可解释的人工智能系统，改变了儿科髋关节诊断。',
+                'pitch.text': '通过在图像上直接可视化诊断证据，我们消除了主观性并增加了专家的信心。我们使影像中心能够将效率提高一倍，使保险公司能够预防因晚期手术造成的数百万美元成本，并使专科医生能够从任何地方访问精确工具。',
+                'pitch.cta1': '查看示例报告',
+                'pitch.cta2': '与助手交谈',
+            }
+        };
+
+        // Current language (default: Spanish)
+        let currentLang = localStorage.getItem('expertia-lang') || 'es';
+        const langOrder = ['es', 'en', 'zh'];
+
+        // Function to cycle language
+        function cycleLanguage() {
+            const currentIndex = langOrder.indexOf(currentLang);
+            const nextIndex = (currentIndex + 1) % langOrder.length;
+            currentLang = langOrder[nextIndex];
+            localStorage.setItem('expertia-lang', currentLang);
+            applyLanguage(currentLang);
+        }
+
+        // Function to apply language
+        function applyLanguage(lang) {
+            // Update body class for font
+            document.body.className = document.body.className.replace(/lang-\w+/g, '');
+            if (lang === 'zh') {
+                document.body.classList.add('lang-zh');
+            }
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update language toggle buttons
+            const langToggle = document.getElementById('lang-toggle');
+            const langToggleMobile = document.getElementById('lang-toggle-mobile');
+            const langLabels = { es: 'ES', en: 'EN', zh: '中文' };
+            
+            if (langToggle) {
+                langToggle.textContent = langLabels[lang];
+            }
+            if (langToggleMobile) {
+                langToggleMobile.textContent = langLabels[lang];
+            }
+
+            // Update charts if they exist
+            updateCharts(lang);
+        }
+
+        // Function to update charts with translations
+        function updateCharts(lang) {
+            const ctxRev = document.getElementById('revenueChart');
+            const ctxCost = document.getElementById('costChart');
+            
+            if (!ctxRev || !ctxCost) return;
+
+            const chartRev = Chart.getChart(ctxRev);
+            const chartCost = Chart.getChart(ctxCost);
+
+            if (chartRev && translations[lang]) {
+                chartRev.data.labels = [
+                    translations[lang]['chart.revenue1'],
+                    translations[lang]['chart.revenue2'],
+                    translations[lang]['chart.revenue3'],
+                    translations[lang]['chart.revenue4'],
+                    translations[lang]['chart.revenue5']
+                ];
+                chartRev.update();
+            }
+
+            if (chartCost && translations[lang]) {
+                chartCost.data.labels = [
+                    translations[lang]['chart.cost1'],
+                    translations[lang]['chart.cost2'],
+                    translations[lang]['chart.cost3'],
+                    translations[lang]['chart.cost4'],
+                    translations[lang]['chart.cost5']
+                ];
+                chartCost.update();
+            }
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyLanguage(currentLang);
+            
+            // Add event listeners to language toggle buttons
+            const langToggle = document.getElementById('lang-toggle');
+            const langToggleMobile = document.getElementById('lang-toggle-mobile');
+            
+            if (langToggle) {
+                langToggle.addEventListener('click', cycleLanguage);
+            }
+            if (langToggleMobile) {
+                langToggleMobile.addEventListener('click', cycleLanguage);
+            }
+        });
+
         // --- GEMINI API CONFIGURATION ---
         const apiKey = ""; // API Key injected by environment
 
@@ -1241,9 +1525,71 @@
             const ctxCost = document.getElementById('costChart');
             const colorsRevenue = ['#3b82f6', '#6366f1', '#8b5cf6', '#14b8a6', '#06b6d4'];
             const colorsCost = ['#ef4444', '#f59e0b', '#84cc16', '#64748b', '#cbd5e1'];
+            
+            const fontFamily = currentLang === 'zh' ? "'Noto Sans SC', 'Plus Jakarta Sans'" : "'Plus Jakarta Sans'";
 
-            if (ctxRev) new Chart(ctxRev.getContext('2d'), { type: 'doughnut', data: { labels: ['SaaS (40%)', 'Setup Fee (20%)', 'Pay-per-Study (20%)', 'Cápita EPS (10%)', 'B2C (10%)'], datasets: [{ data: [40, 20, 20, 10, 10], backgroundColor: colorsRevenue, borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { animateScale: true, animateRotate: true, duration: 2000 }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: {family: "'Plus Jakarta Sans'", size: 11} } } }, cutout: '70%' } });
-            if (ctxCost) new Chart(ctxCost.getContext('2d'), { type: 'doughnut', data: { labels: ['Talento (60%)', 'Cómputo (15%)', 'CAC (10%)', 'Legal (10%)', 'Comisiones (5%)'], datasets: [{ data: [60, 15, 10, 10, 5], backgroundColor: colorsCost, borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { animateScale: true, animateRotate: true, duration: 2000, delay: 500 }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: {family: "'Plus Jakarta Sans'", size: 11} } } }, cutout: '70%' } });
+            if (ctxRev && translations[currentLang]) {
+                new Chart(ctxRev.getContext('2d'), { 
+                    type: 'doughnut', 
+                    data: { 
+                        labels: [
+                            translations[currentLang]['chart.revenue1'],
+                            translations[currentLang]['chart.revenue2'],
+                            translations[currentLang]['chart.revenue3'],
+                            translations[currentLang]['chart.revenue4'],
+                            translations[currentLang]['chart.revenue5']
+                        ], 
+                        datasets: [{ data: [40, 20, 20, 10, 10], backgroundColor: colorsRevenue, borderWidth: 0, hoverOffset: 10 }] 
+                    }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        animation: { animateScale: true, animateRotate: true, duration: 2000 }, 
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom', 
+                                labels: { 
+                                    usePointStyle: true, 
+                                    padding: 20, 
+                                    font: {family: fontFamily, size: 11} 
+                                } 
+                            } 
+                        }, 
+                        cutout: '70%' 
+                    } 
+                });
+            }
+            if (ctxCost && translations[currentLang]) {
+                new Chart(ctxCost.getContext('2d'), { 
+                    type: 'doughnut', 
+                    data: { 
+                        labels: [
+                            translations[currentLang]['chart.cost1'],
+                            translations[currentLang]['chart.cost2'],
+                            translations[currentLang]['chart.cost3'],
+                            translations[currentLang]['chart.cost4'],
+                            translations[currentLang]['chart.cost5']
+                        ], 
+                        datasets: [{ data: [60, 15, 10, 10, 5], backgroundColor: colorsCost, borderWidth: 0, hoverOffset: 10 }] 
+                    }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        animation: { animateScale: true, animateRotate: true, duration: 2000, delay: 500 }, 
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom', 
+                                labels: { 
+                                    usePointStyle: true, 
+                                    padding: 20, 
+                                    font: {family: fontFamily, size: 11} 
+                                } 
+                            } 
+                        }, 
+                        cutout: '70%' 
+                    } 
+                });
+            }
         }
 
         // Mobile Menu
