@@ -127,6 +127,23 @@
             border-radius: 2px;
         }
 
+        /* Language Selector */
+        .lang-btn, .lang-btn-mobile {
+            color: #64748b;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .lang-btn:hover, .lang-btn-mobile:hover {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .lang-btn.active, .lang-btn-mobile.active {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
         /* Chat Widget */
         .chat-widget {
             position: fixed;
@@ -185,7 +202,11 @@
                 <a href="#operaciones" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.operations">Operaciones</a>
                 <a href="#finanzas" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors" data-i18n="nav.finance">Finanzas</a>
                 <a href="#demo-report" class="ml-2 px-3 py-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 rounded-full border border-indigo-200 flex items-center gap-1" data-i18n="nav.report">📄 Ver Reporte</a>
-                <button id="lang-toggle" class="ml-2 px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors" title="Cambiar idioma">ES</button>
+                <div class="ml-2 flex items-center gap-1 bg-white rounded-full border border-slate-200 p-1 shadow-sm">
+                    <button data-lang="es" class="lang-btn px-3 py-1 text-xs font-bold rounded-full transition-all active" title="Español">ES</button>
+                    <button data-lang="en" class="lang-btn px-3 py-1 text-xs font-bold rounded-full transition-all" title="English">EN</button>
+                    <button data-lang="zh" class="lang-btn px-3 py-1 text-xs font-bold rounded-full transition-all" title="中文">中文</button>
+                </div>
             </div>
 
             <button id="menu-btn" class="md:hidden text-slate-700 p-2">
@@ -200,7 +221,11 @@
                 <a href="#operaciones" class="block text-slate-600 font-medium py-2" data-i18n="nav.operations">Operaciones</a>
                 <a href="#finanzas" class="block text-slate-600 font-medium py-2" data-i18n="nav.finance">Finanzas</a>
                 <a href="#demo-report" class="block text-indigo-600 font-bold py-2" data-i18n="nav.report">📄 Ver Reporte</a>
-                <button id="lang-toggle-mobile" class="block w-full text-left text-blue-600 font-bold py-2" data-i18n="nav.lang">ES</button>
+                <div class="flex items-center gap-1 bg-white rounded-full border border-slate-200 p-1 shadow-sm mt-2">
+                    <button data-lang="es" class="lang-btn-mobile px-3 py-1 text-xs font-bold rounded-full transition-all active" title="Español">ES</button>
+                    <button data-lang="en" class="lang-btn-mobile px-3 py-1 text-xs font-bold rounded-full transition-all" title="English">EN</button>
+                    <button data-lang="zh" class="lang-btn-mobile px-3 py-1 text-xs font-bold rounded-full transition-all" title="中文">中文</button>
+                </div>
             </div>
         </div>
     </header>
