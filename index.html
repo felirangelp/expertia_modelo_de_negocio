@@ -947,10 +947,10 @@
                             <div>
                                 <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2" data-i18n="report.interpretation">📝 Interpretación Clínica</h4>
                                 <div class="prose prose-sm text-slate-600 max-w-none text-justify text-xs leading-relaxed">
-                                    <p class="mb-2">La evaluación radiográfica de esta paciente de 5.0 meses revela hallazgos <strong>altamente sugestivos de Displasia del Desarrollo de Cadera (DDH)</strong>, específicamente en la cadera derecha.</p>
-                                    <p class="mb-2">El indicador más preocupante es la marcada asimetría en la distancia D. La cadera derecha presenta una distancia D de 31.0 mm, contrastando con los 12.0 mm de la izquierda. Este hallazgo sugiere lateralización o subluxación.</p>
+                                    <p class="mb-2" data-i18n="report.interpretationText1">La evaluación radiográfica de esta paciente de 5.0 meses revela hallazgos <strong>altamente sugestivos de Displasia del Desarrollo de Cadera (DDH)</strong>, específicamente en la cadera derecha.</p>
+                                    <p class="mb-2" data-i18n="report.interpretationText2">El indicador más preocupante es la marcada asimetría en la distancia D. La cadera derecha presenta una distancia D de 31.0 mm, contrastando con los 12.0 mm de la izquierda. Este hallazgo sugiere lateralización o subluxación.</p>
                                     <div class="bg-yellow-50 border-l-4 border-yellow-400 p-2 mt-2">
-                                        <p class="text-xs text-yellow-700 italic">Nota: Aunque el diagnóstico automático inicial fue "NORMAL", la interpretación profunda de la IA detectó la asimetría crítica en la distancia D y Shenton, elevando una alerta clínica.</p>
+                                        <p class="text-xs text-yellow-700 italic" data-i18n="report.interpretationNote">Nota: Aunque el diagnóstico automático inicial fue "NORMAL", la interpretación profunda de la IA detectó la asimetría crítica en la distancia D y Shenton, elevando una alerta clínica.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1244,6 +1244,9 @@
                 'report.analysis': 'Análisis AI con Anotaciones',
                 'report.parameters': 'Evaluación por Parámetro',
                 'report.interpretation': 'Interpretación Clínica',
+                'report.interpretationText1': 'La evaluación radiográfica de esta paciente de 5.0 meses revela hallazgos <strong>altamente sugestivos de Displasia del Desarrollo de Cadera (DDH)</strong>, específicamente en la cadera derecha.',
+                'report.interpretationText2': 'El indicador más preocupante es la marcada asimetría en la distancia D. La cadera derecha presenta una distancia D de 31.0 mm, contrastando con los 12.0 mm de la izquierda. Este hallazgo sugiere lateralización o subluxación.',
+                'report.interpretationNote': 'Nota: Aunque el diagnóstico automático inicial fue "NORMAL", la interpretación profunda de la IA detectó la asimetría crítica en la distancia D y Shenton, elevando una alerta clínica.',
                 'report.recommendations': 'Recomendaciones',
                 'report.action': 'Acción Inmediata:',
                 'report.actionText': 'Realizar ecografía de cadera (clasificación de Graf) para confirmar inestabilidad.',
@@ -1463,6 +1466,9 @@
                 'report.analysis': 'AI Analysis with Annotations',
                 'report.parameters': 'Parameter Evaluation',
                 'report.interpretation': 'Clinical Interpretation',
+                'report.interpretationText1': 'The radiographic evaluation of this 5.0-month-old patient reveals findings <strong>highly suggestive of Developmental Hip Dysplasia (DDH)</strong>, specifically in the right hip.',
+                'report.interpretationText2': 'The most concerning indicator is the marked asymmetry in distance D. The right hip shows a distance D of 31.0 mm, contrasting with the 12.0 mm of the left. This finding suggests lateralization or subluxation.',
+                'report.interpretationNote': 'Note: Although the initial automatic diagnosis was "NORMAL", the deep AI interpretation detected the critical asymmetry in distance D and Shenton, raising a clinical alert.',
                 'report.recommendations': 'Recommendations',
                 'report.action': 'Immediate Action:',
                 'report.actionText': 'Perform hip ultrasound (Graf classification) to confirm instability.',
@@ -1682,6 +1688,9 @@
                 'report.analysis': '带注释的AI分析',
                 'report.parameters': '参数评估',
                 'report.interpretation': '临床解释',
+                'report.interpretationText1': '对这名5.0个月患者的X光评估显示，<strong>高度提示发育性髋关节发育不良（DDH）</strong>，特别是右髋关节。',
+                'report.interpretationText2': '最令人担忧的指标是距离D的明显不对称。右髋关节显示距离D为31.0毫米，与左侧的12.0毫米形成对比。这一发现提示侧移或半脱位。',
+                'report.interpretationNote': '注意：尽管初始自动诊断为"正常"，但AI的深度解释检测到距离D和Shenton的临界不对称，发出临床警报。',
                 'report.recommendations': '建议',
                 'report.action': '立即行动：',
                 'report.actionText': '进行髋关节超声（Graf分类）以确认不稳定性。',
@@ -1727,7 +1736,12 @@
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                    // Check if element contains HTML (like <strong> tags)
+                    if (element.innerHTML && element.innerHTML.includes('<')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
                 }
             });
 
