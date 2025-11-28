@@ -470,30 +470,30 @@
                             <div class="grid grid-cols-2 gap-6 mb-8">
                                 <div>
                                     <div class="text-3xl font-bold text-blue-400 mb-1">95%</div>
-                                    <div class="text-xs text-slate-400 uppercase tracking-wider">Precisión
+                                    <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="cases.stat1">Precisión
                                         (Sensibilidad)</div>
                                 </div>
                                 <div>
                                     <div class="text-3xl font-bold text-blue-400 mb-1">
-                                        < 5s</div>
-                                            <div class="text-xs text-slate-400 uppercase tracking-wider">Tiempo de
+                                        &lt; 5s</div>
+                                            <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="cases.stat2">Tiempo de
                                                 Análisis</div>
                                     </div>
                                     <div>
                                         <div class="text-3xl font-bold text-blue-400 mb-1">3</div>
-                                        <div class="text-xs text-slate-400 uppercase tracking-wider">Líneas Trazadas
+                                        <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="cases.stat3">Líneas Trazadas
                                             (Auto)</div>
                                     </div>
                                     <div>
                                         <div class="text-3xl font-bold text-blue-400 mb-1">FDA</div>
-                                        <div class="text-xs text-slate-400 uppercase tracking-wider">Roadmap Regulatorio
+                                        <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="cases.stat4">Roadmap Regulatorio
                                         </div>
                                     </div>
                                 </div>
 
                                 <a href="#demo-report"
                                     class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors w-fit"
-                                    data-i18n="cases.ddh.cta">
+                                    data-i18n="cases.cta">
                                     Ver Reporte DDH
                                 </a>
                             </div>
@@ -508,7 +508,7 @@
                                         <div
                                             class="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
                                             <span class="text-white font-bold text-sm"
-                                                data-i18n="cases.ddh.mockup.title">Análisis DDH</span>
+                                                data-i18n="cases.status">DDH Análisis Completado</span>
                                             <span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded"
                                                 data-i18n="cases.ddh.mockup.status">Completado</span>
                                         </div>
@@ -539,19 +539,19 @@
                     <!-- Future Pipeline -->
                     <div class="mt-16 text-center reveal">
                         <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6"
-                            data-i18n="cases.pipeline">Próximamente en la Plataforma</p>
+                            data-i18n="cases.roadmap.title">Plataforma PRÓXIMAMENTE</p>
                         <div class="flex flex-wrap justify-center gap-4">
                             <span
-                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200">Escoliosis
+                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200" data-i18n="cases.roadmap.item1">Escoliosis
                                 (Columna)</span>
                             <span
-                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200">Edad
+                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200" data-i18n="cases.roadmap.item2">Edad
                                 Ósea (Mano)</span>
                             <span
-                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200">Gonartrosis
+                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200" data-i18n="cases.roadmap.item3">Gonartrosis
                                 (Rodilla)</span>
                             <span
-                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200">Análisis
+                                class="px-4 py-2 bg-slate-100 rounded-full text-slate-600 text-sm font-medium border border-slate-200" data-i18n="cases.roadmap.item4">Análisis
                                 Cirugías de Cadera</span>
                         </div>
                     </div>
@@ -1640,10 +1640,10 @@
                                             title="fede780d-6e2a-45a1-a55e-5c58be317c1f">fede780d...</span></li>
                                     <li class="flex justify-between border-b border-slate-100 pb-2"><span
                                             data-i18n="report.patientAge">Edad:</span> <span
-                                            class="font-bold text-slate-800">5 meses</span></li>
+                                            class="font-bold text-slate-800" data-i18n="report.data.age">5 meses</span></li>
                                     <li class="flex justify-between border-b border-slate-100 pb-2"><span
                                             data-i18n="report.patientGender">Sexo:</span> <span
-                                            class="font-bold text-slate-800">Femenino</span></li>
+                                            class="font-bold text-slate-800" data-i18n="report.data.gender">Femenino</span></li>
                                     <li class="flex justify-between"><span data-i18n="report.version">Versión:</span>
                                         <span class="font-mono text-xs">1.0.0</span>
                                     </li>
@@ -1951,6 +1951,19 @@
                 'hero.diagnosis': 'Diagnóstico',
                 'hero.normal': 'Cadera Normal',
                 'hero.angle': 'Ángulo Acetabular',
+                // Cases Section
+                'cases.title': 'Displasia del Desarrollo de Cadera (DDH)',
+                'cases.stat1': '95% PRECISIÓN (SENSIBILIDAD)',
+                'cases.stat2': '< 5s TIEMPO DE ANÁLISIS',
+                'cases.stat3': '3 LÍNEAS TRAZADAS (AUTO)',
+                'cases.stat4': 'FDA ROADMAP REGULATORIO',
+                'cases.status': 'DDH Análisis Completado',
+                'cases.cta': 'Ver Reporte DDH',
+                'cases.roadmap.title': 'Plataforma PRÓXIMAMENTE',
+                'cases.roadmap.item1': 'Escoliosis (Columna)',
+                'cases.roadmap.item2': 'Edad Ósea (Mano)',
+                'cases.roadmap.item3': 'Gonartrosis (Rodilla)',
+                'cases.roadmap.item4': 'Análisis Cirugías de Cadera',
                 'hero.card.title': 'Glass Box Engine',
                 'hero.card.subtitle': 'Transparencia algorítmica y trazabilidad clínica.',
                 'hero.card.input': 'Input: Clinical Data',
@@ -2224,6 +2237,8 @@
                 'report.right': 'Der:',
                 'report.shenton.desc': 'Izquierda: <strong>Curvatura excesiva (5.71 > 3.61)</strong>. Derecha: Continua.',
                 'report.shenton.action': 'Requiere evaluación adicional.',
+                'report.data.age': '5 meses',
+                'report.data.gender': 'Femenino',
                 // Footer
                 'footer.description': 'Tecnología de visión artificial que democratiza el diagnóstico experto en pediatría. Precisión, rapidez y confianza.',
                 'footer.product': 'Producto',
@@ -2271,6 +2286,19 @@
                 'hero.diagnosis': 'Diagnosis',
                 'hero.normal': 'Normal Hip',
                 'hero.angle': 'Acetabular Angle',
+                // Cases Section
+                'cases.title': 'Developmental Dysplasia of the Hip (DDH)',
+                'cases.stat1': '95% ACCURACY (SENSITIVITY)',
+                'cases.stat2': '< 5s ANALYSIS TIME',
+                'cases.stat3': '3 TRACED LINES (AUTO)',
+                'cases.stat4': 'FDA REGULATORY ROADMAP',
+                'cases.status': 'DDH Analysis Completed',
+                'cases.cta': 'View DDH Report',
+                'cases.roadmap.title': 'Platform COMING SOON',
+                'cases.roadmap.item1': 'Scoliosis (Spine)',
+                'cases.roadmap.item2': 'Bone Age (Hand)',
+                'cases.roadmap.item3': 'Gonarthrosis (Knee)',
+                'cases.roadmap.item4': 'Hip Surgery Analysis',
                 'hero.card.title': 'Glass Box Engine',
                 'hero.card.subtitle': 'Algorithmic transparency and clinical traceability.',
                 'hero.card.input': 'Input: Clinical Data',
@@ -2542,6 +2570,8 @@
                 'report.right': 'R:',
                 'report.shenton.desc': 'Left: <strong>Excessive curvature (5.71 > 3.61)</strong>. Right: Continuous.',
                 'report.shenton.action': 'Requires additional evaluation.',
+                'report.data.age': '5 months',
+                'report.data.gender': 'Female',
                 // Footer
                 'footer.description': 'Computer vision technology that democratizes expert diagnosis in pediatrics. Precision, speed and confidence.',
                 'footer.product': 'Product',
@@ -2589,6 +2619,19 @@
                 'hero.diagnosis': '诊断',
                 'hero.normal': '正常髋关节',
                 'hero.angle': '髋臼角',
+                // Cases Section
+                'cases.title': '发育性髋关节发育不良 (DDH)',
+                'cases.stat1': '95% 准确率（敏感度）',
+                'cases.stat2': '< 5s 分析时间',
+                'cases.stat3': '3条自动绘制线',
+                'cases.stat4': 'FDA 监管路线图',
+                'cases.status': 'DDH 分析 已完成',
+                'cases.cta': '查看 DDH 报告',
+                'cases.roadmap.title': '平台即将推出',
+                'cases.roadmap.item1': '脊柱侧弯（脊柱）',
+                'cases.roadmap.item2': '骨龄（手部）',
+                'cases.roadmap.item3': '膝关节骨性关节炎（膝盖）',
+                'cases.roadmap.item4': '髋关节手术分析',
                 'hero.card.title': '透明盒引擎',
                 'hero.card.subtitle': '算法透明度和临床可追溯性。',
                 'hero.card.input': '输入：临床数据',
@@ -2860,6 +2903,8 @@
                 'report.right': '右：',
                 'report.shenton.desc': '左侧：<strong>过度弯曲 (5.71 > 3.61)</strong>。右侧：连续。',
                 'report.shenton.action': '需要额外评估。',
+                'report.data.age': '5个月',
+                'report.data.gender': '女',
                 // Footer
                 'footer.description': '使儿科专家诊断民主化的计算机视觉技术。精确、快速和可靠。',
                 'footer.product': '产品',
