@@ -507,20 +507,23 @@
                                         class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-xl max-w-xs w-full mx-4">
                                         <div
                                             class="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
-                                            <span class="text-white font-bold text-sm">Análisis DDH</span>
-                                            <span
-                                                class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded">Completado</span>
+                                            <span class="text-white font-bold text-sm"
+                                                data-i18n="cases.ddh.mockup.title">Análisis DDH</span>
+                                            <span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded"
+                                                data-i18n="cases.ddh.mockup.status">Completado</span>
                                         </div>
                                         <div class="space-y-3">
                                             <div class="flex justify-between text-xs text-slate-300">
-                                                <span>Ángulo Acetabular (Izq)</span>
+                                                <span data-i18n="cases.ddh.mockup.angleLeft">Ángulo Acetabular
+                                                    (Izq)</span>
                                                 <span class="text-white font-mono">23.4°</span>
                                             </div>
                                             <div class="w-full bg-slate-700/50 rounded-full h-1">
                                                 <div class="bg-green-400 h-1 rounded-full" style="width: 70%"></div>
                                             </div>
                                             <div class="flex justify-between text-xs text-slate-300">
-                                                <span>Ángulo Acetabular (Der)</span>
+                                                <span data-i18n="cases.ddh.mockup.angleRight">Ángulo Acetabular
+                                                    (Der)</span>
                                                 <span class="text-white font-mono">24.1°</span>
                                             </div>
                                             <div class="w-full bg-slate-700/50 rounded-full h-1">
@@ -1702,51 +1705,64 @@
                                     <!-- Param Card: H-Distance -->
                                     <div class="p-4 rounded-lg border border-green-200 bg-green-50/30">
                                         <div class="flex justify-between items-start mb-2">
-                                            <span class="font-bold text-slate-700 text-sm">H-Distance</span>
+                                            <span class="font-bold text-slate-700 text-sm"
+                                                data-i18n="report.param.hDistance">H-Distance</span>
                                             <span
-                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅
+                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold"
+                                                data-i18n="report.status.normal">✅
                                                 NORMAL</span>
                                         </div>
-                                        <div class="text-xs font-mono text-slate-500">Rango: 8.0 - 10.0 mm</div>
+                                        <div class="text-xs font-mono text-slate-500"><span
+                                                data-i18n="report.range">Rango:</span> 8.0 - 10.0 mm</div>
                                     </div>
 
                                     <!-- Param Card: D-Distance -->
                                     <div class="p-4 rounded-lg border border-green-200 bg-green-50/30">
                                         <div class="flex justify-between items-start mb-2">
-                                            <span class="font-bold text-slate-700 text-sm">D-Distance</span>
+                                            <span class="font-bold text-slate-700 text-sm"
+                                                data-i18n="report.param.dDistance">D-Distance</span>
                                             <span
-                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅
+                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold"
+                                                data-i18n="report.status.normal">✅
                                                 NORMAL</span>
                                         </div>
-                                        <div class="text-xs font-mono text-slate-500">Rango: 14.0 - 16.0 mm</div>
+                                        <div class="text-xs font-mono text-slate-500"><span
+                                                data-i18n="report.range">Rango:</span> 14.0 - 16.0 mm</div>
                                     </div>
 
                                     <!-- Param Card: IA -->
                                     <div class="p-4 rounded-lg border border-green-200 bg-green-50/30 md:col-span-2">
                                         <div class="flex justify-between items-start mb-2">
-                                            <span class="font-bold text-slate-700 text-sm">Índice Acetabular (IA)</span>
+                                            <span class="font-bold text-slate-700 text-sm"
+                                                data-i18n="report.param.ia">Índice Acetabular (IA)</span>
                                             <span
-                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold">✅
+                                                class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded font-bold"
+                                                data-i18n="report.status.normal">✅
                                                 NORMAL</span>
                                         </div>
-                                        <p class="text-xs text-slate-600 mb-1">Izq: 23.4°, Der: 23.6°.</p>
+                                        <p class="text-xs text-slate-600 mb-1"><span data-i18n="report.left">Izq:</span>
+                                            23.4°, <span data-i18n="report.right">Der:</span> 23.6°.</p>
                                         <div class="flex justify-between text-xs font-mono text-slate-500">
-                                            <span>Valor: 23.50°</span>
-                                            <span>Ref: 18.0° - 32.0°</span>
+                                            <span><span data-i18n="report.value">Valor:</span> 23.50°</span>
+                                            <span><span data-i18n="report.ref">Ref:</span> 18.0° - 32.0°</span>
                                         </div>
                                     </div>
 
                                     <!-- Param Card: Shenton -->
                                     <div class="p-4 rounded-lg border border-orange-200 bg-orange-50/30 md:col-span-2">
                                         <div class="flex justify-between items-start mb-2">
-                                            <span class="font-bold text-slate-700 text-sm">Línea de Shenton</span>
+                                            <span class="font-bold text-slate-700 text-sm"
+                                                data-i18n="report.param.shenton">Línea de Shenton</span>
                                             <span
-                                                class="bg-orange-100 text-orange-700 text-[10px] px-2 py-0.5 rounded font-bold">⚠️
+                                                class="bg-orange-100 text-orange-700 text-[10px] px-2 py-0.5 rounded font-bold"
+                                                data-i18n="report.status.abnormal">⚠️
                                                 ABNORMAL</span>
                                         </div>
-                                        <p class="text-xs text-slate-600 mb-1">Izquierda: <strong>Curvatura excesiva
+                                        <p class="text-xs text-slate-600 mb-1" data-i18n="report.shenton.desc">
+                                            Izquierda: <strong>Curvatura excesiva
                                                 (5.71 > 3.61)</strong>. Derecha: Continua.</p>
-                                        <div class="text-xs font-mono text-slate-500">Requiere evaluación adicional.
+                                        <div class="text-xs font-mono text-slate-500" data-i18n="report.shenton.action">
+                                            Requiere evaluación adicional.
                                         </div>
                                     </div>
                                 </div>
@@ -1950,6 +1966,10 @@
                 'cases.ddh.title': 'El Desafío Clínico',
                 'cases.ddh.desc': 'La DDH es la patología musculoesquelética más común en recién nacidos. Su diagnóstico manual es subjetivo, propenso a errores (hasta 20% de variabilidad inter-observador) y consume tiempo valioso del radiólogo.',
                 'cases.ddh.cta': 'Ver Reporte DDH',
+                'cases.ddh.mockup.title': 'Análisis DDH',
+                'cases.ddh.mockup.status': 'Completado',
+                'cases.ddh.mockup.angleLeft': 'Ángulo Acetabular (Izq)',
+                'cases.ddh.mockup.angleRight': 'Ángulo Acetabular (Der)',
                 'cases.pipeline': 'Próximamente en la Plataforma',
                 // Clients Section
                 // Business Lines Section
@@ -2168,7 +2188,21 @@
                 'report.actionText': 'Realizar ecografía de cadera (clasificación de Graf) para confirmar inestabilidad.',
                 'report.referral': 'Derivación urgente a ortopedista pediátrico si se confirma displasia.',
                 'report.followup': 'Seguimiento estándar (solo si se descarta patología).',
+                'report.followup': 'Seguimiento estándar (solo si se descarta patología).',
                 'report.disclaimer': 'Este reporte es generado automáticamente y debe ser revisado por un especialista.',
+                'report.param.hDistance': 'H-Distance',
+                'report.param.dDistance': 'D-Distance',
+                'report.param.ia': 'Índice Acetabular (IA)',
+                'report.param.shenton': 'Línea de Shenton',
+                'report.status.normal': '✅ NORMAL',
+                'report.status.abnormal': '⚠️ ANORMAL',
+                'report.range': 'Rango:',
+                'report.value': 'Valor:',
+                'report.ref': 'Ref:',
+                'report.left': 'Izq:',
+                'report.right': 'Der:',
+                'report.shenton.desc': 'Izquierda: <strong>Curvatura excesiva (5.71 > 3.61)</strong>. Derecha: Continua.',
+                'report.shenton.action': 'Requiere evaluación adicional.',
                 // Footer
                 'footer.description': 'Tecnología de visión artificial que democratiza el diagnóstico experto en pediatría. Precisión, rapidez y confianza.',
                 'footer.product': 'Producto',
@@ -2237,6 +2271,10 @@
                 'cases.ddh.title': 'The Clinical Challenge',
                 'cases.ddh.desc': 'DDH is the most common musculoskeletal pathology in newborns. Its manual diagnosis is subjective, prone to errors (up to 20% inter-observer variability), and consumes valuable radiologist time.',
                 'cases.ddh.cta': 'View DDH Report',
+                'cases.ddh.mockup.title': 'DDH Analysis',
+                'cases.ddh.mockup.status': 'Completed',
+                'cases.ddh.mockup.angleLeft': 'Acetabular Angle (L)',
+                'cases.ddh.mockup.angleRight': 'Acetabular Angle (R)',
                 'cases.pipeline': 'Coming Soon to the Platform',
                 // Business Lines Section
                 'business.badge': 'Beyond the Algorithm',
@@ -2455,6 +2493,19 @@
                 'report.referral': 'Urgent referral to pediatric orthopedist if dysplasia is confirmed.',
                 'report.followup': 'Standard follow-up (only if pathology is ruled out).',
                 'report.disclaimer': 'This report is automatically generated and must be reviewed by a specialist.',
+                'report.param.hDistance': 'H-Distance',
+                'report.param.dDistance': 'D-Distance',
+                'report.param.ia': 'Acetabular Index (AI)',
+                'report.param.shenton': 'Shenton Line',
+                'report.status.normal': '✅ NORMAL',
+                'report.status.abnormal': '⚠️ ABNORMAL',
+                'report.range': 'Range:',
+                'report.value': 'Value:',
+                'report.ref': 'Ref:',
+                'report.left': 'L:',
+                'report.right': 'R:',
+                'report.shenton.desc': 'Left: <strong>Excessive curvature (5.71 > 3.61)</strong>. Right: Continuous.',
+                'report.shenton.action': 'Requires additional evaluation.',
                 // Footer
                 'footer.description': 'Computer vision technology that democratizes expert diagnosis in pediatrics. Precision, speed and confidence.',
                 'footer.product': 'Product',
@@ -2523,6 +2574,10 @@
                 'cases.ddh.title': '临床挑战',
                 'cases.ddh.desc': 'DDH 是新生儿最常见的肌肉骨骼病理。其手动诊断具有主观性，容易出错（观察者间变异高达 20%），并且消耗放射科医生宝贵的时间。',
                 'cases.ddh.cta': '查看 DDH 报告',
+                'cases.ddh.mockup.title': 'DDH 分析',
+                'cases.ddh.mockup.status': '已完成',
+                'cases.ddh.mockup.angleLeft': '髋臼角 (左)',
+                'cases.ddh.mockup.angleRight': '髋臼角 (右)',
                 'cases.pipeline': '平台即将推出',
                 // Business Lines Section
                 'business.badge': '超越算法',
@@ -2741,6 +2796,19 @@
                 'report.referral': '如果确认发育不良，紧急转诊至儿科骨科医生。',
                 'report.followup': '标准随访（仅在排除病理时）。',
                 'report.disclaimer': '此报告是自动生成的，必须由专科医生审查。',
+                'report.param.hDistance': 'H距离',
+                'report.param.dDistance': 'D距离',
+                'report.param.ia': '髋臼指数 (IA)',
+                'report.param.shenton': 'Shenton线',
+                'report.status.normal': '✅ 正常',
+                'report.status.abnormal': '⚠️ 异常',
+                'report.range': '范围：',
+                'report.value': '值：',
+                'report.ref': '参考：',
+                'report.left': '左：',
+                'report.right': '右：',
+                'report.shenton.desc': '左侧：<strong>过度弯曲 (5.71 > 3.61)</strong>。右侧：连续。',
+                'report.shenton.action': '需要额外评估。',
                 // Footer
                 'footer.description': '使儿科专家诊断民主化的计算机视觉技术。精确、快速和可靠。',
                 'footer.product': '产品',
